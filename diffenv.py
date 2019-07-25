@@ -11,26 +11,31 @@ parser = argparse.ArgumentParser(description='Diff total development environment
 parser.add_argument('-o', '--output', help='output to file instead of stdout')
 args = parser.parse_args()
 
-mypath = './facets'
+def run_facet(name, path):
+  """ Run a facet and return the results as string """
+  result = ''
+  result += '\n' + ('=' * 70) + '\n'
+  result += script
+  result += '\n' + ('=' * 70) + '\n'
+  try:
+    process = subprocess.Popen([path], stdout=subprocess.PIPE)
+    out, err = process.communicate()
+    if err:
+      sys.stderr.write(err)
+    result += (out.decode("utf-8"))
+  except subprocess.CalledProcessError as e:
+    sys.stderr.write("Problem running %s: %e" % (script, e))
+    result += "Problem running %s: %e" % (script, e)
+  return result
 
-facetScripts = [f for f in listdir(mypath) if isfile(join(mypath, f))]
-facetScripts.sort()
+facet_path = './facets'
+
+facetScripts = [f for f in listdir(facet_path) if isfile(join(facet_path, f))]
+facetScripts.sort() # Sort them alphabetically
 
 diffenv = ''
 for script in facetScripts:
-  diffenv += '\n' + ('=' * 70) + '\n'
-  diffenv += script
-  diffenv += '\n' + ('=' * 70) + '\n'
-  try:
-      process = subprocess.Popen(
-          [join(mypath, script)], stdout=subprocess.PIPE)
-      out, err = process.communicate()
-      if err:
-        sys.stderr.write(err)
-      # TODO: Check if err happened. None or empty string?
-      diffenv += out.decode("utf-8")
-  except subprocess.CalledProcessError as e:
-      sys.stderr.write("Problem running %s" % script)
+  diffenv += run_facet(script, join(facet_path, script))
 
 # Handle outputting to file or stdout
 outfilestream = sys.stdout if args.output is None else open(args.output, 'w')
