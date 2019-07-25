@@ -28,17 +28,38 @@ def run_facet(name, path):
     result += "Problem running %s: %e" % (path, e)
   return result
 
+
+def git_toplevel():
+  try:
+    process = subprocess.Popen(
+        ['git','rev-parse','--show-toplevel'], stdout=subprocess.PIPE)
+    out, err = process.communicate()
+    if err:
+      sys.stderr.write(err)
+    return (out.decode("utf-8").strip())
+  except subprocess.CalledProcessError as e:
+    sys.stderr.write(
+        "Problem running git rev-parse --show-toplevel: %e" % e)
+    return None
+
 # Default facets
 default_facet_dir = './facets'
 default_facets = [(default_facet_dir, f) for f in listdir(
     default_facet_dir) if isfile(join(default_facet_dir, f))]
+default_facets.sort()
 # User facets
 user_facet_dir = os.path.expanduser('~/.diffenv/facets')
 user_facets = [(user_facet_dir, f) for f in listdir(user_facet_dir) if isfile(
     join(user_facet_dir, f))] if os.path.isdir(user_facet_dir) else []
+user_facets.sort()
+# Repo facets
+git_facet_dir = join(git_toplevel(), '.diffenv/facets')
+git_facets = [(git_facet_dir, f) for f in listdir(git_facet_dir) if isfile(
+    join(git_facet_dir, f))] if os.path.isdir(git_facet_dir) else []
+git_facets.sort()
 # Sort all facets
-facets = default_facets + user_facets
-facets.sort()  # Sort them alphabetically
+facets = default_facets + user_facets + git_facets
+
 # Run the facets!
 diffenv = ''
 for (facet_dir, facet_name) in facets:
