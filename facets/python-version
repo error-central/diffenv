@@ -1,3 +1,4 @@
 #!/bin/bash
 
+# Python 2 will write version to stderr, so we have to point to stdout
 python -V 2>&1
