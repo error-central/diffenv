@@ -7,6 +7,7 @@ from os import listdir
 from os.path import isfile, join
 import argparse
 
+# Handle arguments
 parser = argparse.ArgumentParser(description='Diff total development environment.')
 parser.add_argument('-o', '--output', help='output to file instead of stdout')
 args = parser.parse_args()
@@ -30,6 +31,10 @@ def run_facet(name, path):
 
 
 def git_toplevel():
+  """
+  Return absolute path of current git repo, if we're in one.
+  Otherwise return None
+  """
   try:
     process = subprocess.Popen(
         ['git','rev-parse','--show-toplevel'], stdout=subprocess.PIPE)
