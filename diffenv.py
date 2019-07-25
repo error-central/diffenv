@@ -5,6 +5,11 @@ import sys
 import os
 from os import listdir
 from os.path import isfile, join
+import argparse
+
+parser = argparse.ArgumentParser(description='Diff total development environment.')
+parser.add_argument('-o', '--output', help='output to file instead of stdout')
+args = parser.parse_args()
 
 mypath = './facets'
 
@@ -27,5 +32,8 @@ for script in facetScripts:
   except subprocess.CalledProcessError as e:
       sys.stderr.write("Problem running %s" % script)
 
-print(diffenv)
+# Handle outputting to file or stdout
+outfilestream = sys.stdout if args.output is None else open(args.output, 'w')
+
+print(diffenv, file=outfilestream)
 
