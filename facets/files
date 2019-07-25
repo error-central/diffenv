@@ -14,11 +14,11 @@ def md5(fname):
   return hash_md5.hexdigest()
 
 for root, dirs, files in os.walk("."):
-    # print((len(path) - 1) * '---', os.path.basename(root))
     for file in files:
         filepath = os.path.join(root, file)
-        # Generate stats on this file
+        # Get stats on this file
         file_size_bytes = os.path.getsize(filepath)
         file_mod_time = os.path.getmtime(filepath)
-        file_hash = "" if (file_size_bytes > MAX_FILE_SIZE_HASH) else md5(filepath)
-        print (file_size_bytes, file_mod_time, file_hash, filepath, sep='\t')
+        file_hash = ("-"*32) if (file_size_bytes > MAX_FILE_SIZE_HASH) else md5(filepath)
+        # Print the stats
+        print (file_size_bytes, str(file_mod_time)[:16], file_hash, filepath, sep='\t')
