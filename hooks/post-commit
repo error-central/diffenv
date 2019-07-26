@@ -10,10 +10,6 @@ import sys
 import os
 from os.path import join
 
-# We launch with current dir of the .git/hooks dir of the repo
-os.chdir(os.path.dirname(__file__))
-print(os.getcwd())
-
 try:
     commit_hash = check_output(['git', 'rev-parse', 'HEAD']).decode("utf-8").strip()
 except CalledProcessError as e:
@@ -31,7 +27,6 @@ except e:
 try:
     # Note: GIT_DIR is set by git before hook runs
     diffenv_filename = join(commits_dir, commit_hash + '.diffenv')
-    print(diffenv_filename)
     commit_hash = check_call(['diffenv', '-o', diffenv_filename])
 except FileNotFoundError:
     sys.stderr.write("ERROR: diffenv hook ran, but diffenv isn't installed.\n")
