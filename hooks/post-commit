@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+
+"""
+A git hook to automatically run diffenv after a successful git commit.
+Saves to file named for the git hash
+"""
+
+from subprocess import check_output, check_call, CalledProcessError
+import sys
+
+try:
+	commit_hash = check_output(['git', 'rev-parse', 'HEAD']).decode("utf-8").strip()
+except CalledProcessError as e:
+    sys.stderr.write("ERROR: diffenv git hook could get git hash. Error: %e\n" % e)
+    exit(1)
+
+try:
+	diffenv_filename = commit_hash + '.diffenv'
+	commit_hash = check_call(['diffenv', '-o', diffenv_filename])
+except FileNotFoundError:
+    sys.stderr.write("ERROR: diffenv hook ran, but diffenv isn't installed.\n")
+    exit(1)
+except CalledProcessError as e:
+    sys.stderr.write("ERROR: Could not run diffenv git hook. Error: %e\n" % e)
+    exit(1)

@@ -6,6 +6,7 @@ import os
 from os import listdir
 from os.path import isfile, join
 import argparse
+from shutil import copyfile
 
 import diffviewer
 
@@ -14,6 +15,8 @@ import diffviewer
 parser = argparse.ArgumentParser(description='Diff total development environment.')
 parser.add_argument('-o', '--output', help='output to file instead of stdout')
 parser.add_argument('-c', '--compare', nargs='*', default=None, help='display diff between two environments')
+parser.add_argument('--add-hooks', action='store_true', help='install diffenv git hooks in current repo')
+
 args = parser.parse_args()
 
 def run_facet(name, path):
@@ -81,6 +84,14 @@ def collect_env():
 
 # Handle outputting to file or stdout
 outfilestream = sys.stdout if args.output is None else open(args.output, 'w')
+
+if args.add_hooks:
+  # Install git hooks
+  hooks_dst = join(git_toplevel(), '.git', 'hooks', 'post-commit')
+  dirname, filename = os.path.split(os.path.abspath(__file__))
+  hooks_src = join(dirname, 'hooks', 'post-commit')
+  copyfile(hooks_src, hooks_dst)
+  print ("virtualenv: Installed post-commit hook to %s", hooks_dst)
 
 if args.compare is None:
   # Output our results
