@@ -22,6 +22,8 @@ def run_facet(name, path):
   result += '\n' + ('=' * 70) + '\n'
   result += name
   result += '\n' + ('=' * 70) + '\n'
+  if not os.access(path, os.X_OK):
+    return (result + "ERROR: Facet is not executable: %s" % path)
   try:
     process = subprocess.Popen([path], stdout=subprocess.PIPE)
     out, err = process.communicate()
@@ -30,7 +32,7 @@ def run_facet(name, path):
     result += (out.decode("utf-8"))
   except subprocess.CalledProcessError as e:
     sys.stderr.write("Problem running %s: %e" % (path, e))
-    result += "Problem running %s: %e" % (path, e)
+    result += "ERROR: Problem running %s: %e" % (path, e)
   return result
 
 
