@@ -28,9 +28,8 @@ if args.add_hooks:
   # Find hooks dir relative to this file
   hooks_src = join(dirname, '..', 'hooks', 'post-commit')
   copyfile(hooks_src, hooks_dst)
-  print ("virtualenv: Installed post-commit hook to %s", hooks_dst)
-
-if args.compare is None:
+  print ("virtualenv: Installed git post-commit hook to %s" % hooks_dst)
+elif args.compare is None:
   # Output our results
   print(collect_env(), file=outfilestream)
 else:
