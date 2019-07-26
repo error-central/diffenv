@@ -1,5 +1,3 @@
-
-
 import subprocess
 import sys
 import os
@@ -68,4 +66,3 @@ def collect_env():
   for (facet_dir, facet_name) in facets:
     diffenv += run_facet(facet_name, join(facet_dir, facet_name))
   return diffenv
-
