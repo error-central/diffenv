@@ -45,7 +45,8 @@ def git_toplevel():
 
 def collect_env():
   # Default facets
-  default_facet_dir = './facets'
+  default_facet_dir = join(os.path.split(
+      os.path.abspath(__file__))[0], '..', 'facets') # dir in our package
   default_facets = [(default_facet_dir, f) for f in listdir(
     default_facet_dir) if isfile(join(default_facet_dir, f))]
   default_facets.sort()

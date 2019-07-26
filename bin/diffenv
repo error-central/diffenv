@@ -24,8 +24,9 @@ outfilestream = sys.stdout if args.output is None else open(args.output, 'w')
 if args.add_hooks:
   # Install git hooks
   hooks_dst = join(git_toplevel(), '.git', 'hooks', 'post-commit')
-  dirname, filename = os.path.split(os.path.abspath(__file__))
-  hooks_src = join(dirname, 'hooks', 'post-commit')
+  dirname = os.path.split(os.path.abspath(__file__))[0]
+  # Find hooks dir relative to this file
+  hooks_src = join(dirname, '..', 'hooks', 'post-commit')
   copyfile(hooks_src, hooks_dst)
   print ("virtualenv: Installed post-commit hook to %s", hooks_dst)
 
