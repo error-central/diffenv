@@ -5,6 +5,7 @@ import argparse
 import os
 from os.path import join
 from shutil import copyfile, copystat
+import requests
 
 from diffenv.main import *
 from diffenv import diffviewer
@@ -13,8 +14,9 @@ from diffenv import diffviewer
 
 parser = argparse.ArgumentParser(description='Diff total development environment.')
 parser.add_argument('-o', '--output', help='output to file instead of stdout')
-parser.add_argument('-c', '--compare', nargs='*', default=None, help='display diff between two environments')
+parser.add_argument('-c', '--compare', nargs='*', help='display diff between two environments')
 parser.add_argument('--add-hooks', action='store_true', help='install diffenv git hooks in current repo')
+parser.add_argument('--share', nargs='?', const='https://file.io', help='Share as POST with provided URL')
 
 args = parser.parse_args()
 
@@ -33,21 +35,24 @@ if args.add_hooks:
   copystat(hooks_src, hooks_dst)
   print("virtualenv: Installed git post-commit hook to %s" % hooks_dst)
 elif args.compare is None:
-  # Output our results
-  print(collect_env(), file=outfilestream)
+  env = collect_env()
+  if args.share != None:
+
+    upload_url = args.share
+    r = requests.post(upload_url, files={'file': env})
+    print('Run the following line:')
+    print('diffenv --compare ' + r.json()['link'])
+  else:
+    # Output our results
+    print(env, file=outfilestream)
 else:
   if len(args.compare) == 0:
     # TODO compare to current state to most recent commit
     print("Git hook integration not implemented yet")
   else:
-    files = []
-    with open(args.compare[0]) as other_file:
-      files.append(other_file.readlines())
-    if len(args.compare) == 1:
+    files = [read_file_or_url(name) for name in args.compare]
+    if len(files) == 1:
       files = [[l + '\n' for l in collect_env().splitlines()]] + files
-    else:
-      with open(args.compare[1]) as other_file:
-        files.append(other_file.readlines())
 
     diffviewer.display_diff(files[0],
                             files[1],

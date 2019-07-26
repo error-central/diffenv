@@ -4,6 +4,8 @@ import os
 from os import listdir
 from os.path import isfile, join
 import sys
+import requests
+import re
 
 def run_facet(name, path):
   """ Run a facet and return the results as string """
@@ -68,3 +70,16 @@ def collect_env():
   for (facet_dir, facet_name) in facets:
     diffenv += run_facet(facet_name, join(facet_dir, facet_name))
   return diffenv
+
+
+def read_file_or_url(name):
+  if re.match(r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+', name):
+    # it's a URL!
+    r = requests.get(name)
+    if r.status_code == 404:
+      raise Exception(name + ' yielded 404 status code. You may only be able to download a shared environment once (they get deleted)')
+    else:
+      return [l + '\n' for l in r.text.splitlines()]
+  else:
+    with open(name) as file:
+      return file.readlines()

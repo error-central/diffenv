@@ -18,6 +18,7 @@ setup(
   packages=['diffenv'],
   install_requires=[
     'colorama',
+    'requests',
   ],
   zip_safe=False,
   
