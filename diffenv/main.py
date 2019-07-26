@@ -3,6 +3,7 @@ import sys
 import os
 from os import listdir
 from os.path import isfile, join
+import sys
 
 def run_facet(name, path):
   """ Run a facet and return the results as string """
@@ -11,6 +12,7 @@ def run_facet(name, path):
   result += name
   result += '\n' + ('=' * 70) + '\n'
   if not os.access(path, os.X_OK):
+    sys.stderr.write("ERROR: Facet is not executable: %s" % path)
     return (result + "ERROR: Facet is not executable: %s" % path)
   try:
     process = subprocess.Popen([path], stdout=subprocess.PIPE)
