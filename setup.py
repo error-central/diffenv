@@ -13,7 +13,7 @@ setup(
   description='Compare development environments',
   long_description=readme(),
   long_description_content_type='text/markdown',
-  scripts=['bin/diffenv'],
+  scripts=['bin/diffenv', 'bin/diffenv-nopaging'],
   license='MIT',
   packages=['diffenv'],
   install_requires=[
