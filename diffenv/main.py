@@ -77,7 +77,7 @@ def read_file_or_url(name):
     # it's a URL!
     r = requests.get(name)
     if r.status_code == 404:
-      raise Exception(name + ' yielded 404 status code. You may only be able to download a shared environment once (they get deleted)')
+      raise Exception(name + ' yielded 404 status code. Your upload may have expired.')
     else:
       return [l + '\n' for l in r.text.splitlines()]
   else:

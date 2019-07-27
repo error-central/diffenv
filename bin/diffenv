@@ -16,7 +16,7 @@ parser = argparse.ArgumentParser(description='Diff total development environment
 parser.add_argument('-o', '--output', help='output to file instead of stdout')
 parser.add_argument('-c', '--compare', nargs='*', help='display diff between two environments')
 parser.add_argument('--add-hooks', action='store_true', help='install diffenv git hooks in current repo')
-parser.add_argument('--share', nargs='?', const='https://file.io', help='Share as POST with provided URL')
+parser.add_argument('--share', nargs='?', const='https://transfer.sh', help='Share as POST with provided URL')
 
 args = parser.parse_args()
 
@@ -39,9 +39,9 @@ elif args.compare is None:
   if args.share != None:
 
     upload_url = args.share
-    r = requests.post(upload_url, files={'file': env})
+    r = requests.post(upload_url, files={'diff': env})
     print('Run the following line:')
-    print('diffenv --compare ' + r.json()['link'])
+    print('diffenv --compare ' + r.text)
   else:
     # Output our results
     print(env, file=outfilestream)
