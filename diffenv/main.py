@@ -25,7 +25,11 @@ def run_facet(name, path):
       sys.stderr.write(err)
     result = (out.decode("utf-8"))
     try:
-      result = yaml.load(result)
+      y = yaml.load(result)
+      if type(y) == str:
+        result = result.strip()
+      else:
+        result = y
     except ScannerError as e:
       # does not seem to be valid yaml (or JSON)
       pass
@@ -81,9 +85,8 @@ def collect_env():
   # format the facet output
   for _, facet_name in facets:
     yaml_map.yaml_set_comment_before_after_key(facet_name, ('=' * 60))
-  buf = StringIO()
-  yaml.dump(yaml_map, buf)
-  return buf.getvalue()
+
+  return yaml_map
 
 
 def read_file_or_url(name):
@@ -93,7 +96,7 @@ def read_file_or_url(name):
     if r.status_code == 404:
       raise Exception(name + ' yielded 404 status code. Your upload may have expired.')
     else:
-      return [l + '\n' for l in r.text.splitlines()]
+      return yaml.load(r.text)
   else:
     with open(name) as file:
-      return file.readlines()
+      return yaml.load(file)
