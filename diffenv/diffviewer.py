@@ -67,9 +67,9 @@ def color_diff(diff):
 
 
 def diff_nested(m1, m2):
-    """Computes diff of two nested YAML structures."""
+    """ Computes diff of two nested YAML structures. """
     if isinstance(m1, collections.Mapping) and m2:
-        # we are comparing dictionaries
+        # We are comparing dictionaries
         result = deepcopy(m1)
         for key in m1:
             if m1[key] == m2.get(key):
@@ -83,7 +83,7 @@ def diff_nested(m1, m2):
         return result
 
     elif isinstance(m1, collections.Sequence) and not isinstance(m1, str) and m2:
-        # we are comparing lists
+        # We are comparing lists
         result = deepcopy(m1)
         if len(m1) == len(m2):
             to_delete = []
@@ -101,7 +101,7 @@ def diff_nested(m1, m2):
             return result
 
         else:
-            # if the lists are unequal size
+            # If the lists are unequal size
             # does not handle nested sequences
             matches = difflib.SequenceMatcher(
                 None, m1, m2).get_matching_blocks()
@@ -115,7 +115,7 @@ def diff_nested(m1, m2):
                                  (B_MARKER, m2)])
 
     else:
-        # we are comparing values (likely strings) directly
+        # We are comparing values (likely strings) directly
         result = CommentedMap([(A_MARKER, m1),
                                (B_MARKER, m2)])
         if isinstance(m1, str) and m2:

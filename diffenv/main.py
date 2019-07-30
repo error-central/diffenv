@@ -13,7 +13,7 @@ yaml = YAML()
 
 
 def run_facet(name, path):
-    """ Run a facet and return the results as a Python object"""
+    """ Run a facet and return the results as a Python object """
     if not os.access(path, os.X_OK):
         sys.stderr.write("ERROR: Facet is not executable: %s" % path)
         return "ERROR: Facet is not executable: %s" % path
