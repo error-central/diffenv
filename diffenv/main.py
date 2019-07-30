@@ -8,6 +8,7 @@ import re
 from ruamel.yaml import YAML
 from ruamel.yaml.scanner import ScannerError
 from ruamel.yaml.comments import CommentedMap
+import pathlib
 
 yaml = YAML()
 
@@ -57,34 +58,39 @@ def git_toplevel():
         return None
 
 
+def run_facet_dir(dirpath, structure=CommentedMap()):
+    """
+    Execute facets in folder, recursively building a nested map.
+    """
+    p = pathlib.Path(dirpath)
+    if p.exists():
+        for item in p.iterdir():
+            if item.is_dir():
+                run_facet_dir(
+                    item, structure.get(item.name, CommentedMap()))
+            elif item.name not in structure:
+                structure[item.name] = run_facet(
+                    item.name, str(item.absolute()))
+                structure.yaml_set_comment_before_after_key(
+                    item.name, ('=' * 60))
+    return structure
+
+
 def collect_env():
-    # Default facets
+            # Default facets
     default_facet_dir = join(os.path.split(
         os.path.abspath(__file__))[0], '..', 'facets')  # dir in our package
-    default_facets = sorted([(default_facet_dir, f) for f in listdir(
-        default_facet_dir) if isfile(join(default_facet_dir, f))])
+
     # User facets
     user_facet_dir = os.path.expanduser('~/.diffenv/facets')
-    user_facets = [(user_facet_dir, f) for f in listdir(user_facet_dir) if isfile(
-        join(user_facet_dir, f))] if os.path.isdir(user_facet_dir) else []
-    user_facets.sort()
+
     # Repo facets
     git_facet_dir = join(git_toplevel(), '.diffenv/facets')
-    git_facets = [(git_facet_dir, f) for f in listdir(git_facet_dir) if isfile(
-        join(git_facet_dir, f))] if os.path.isdir(git_facet_dir) else []
-    git_facets.sort()
-    # Sort all facets
-    facets = git_facets + user_facets + default_facets
 
     # Run the facets!
-    yaml_map = CommentedMap([(facet_name,
-                              run_facet(facet_name, join(facet_dir, facet_name)))
-                             for (facet_dir, facet_name) in facets])
-
-    # format the facet output
-    for _, facet_name in facets:
-        yaml_map.yaml_set_comment_before_after_key(facet_name, ('=' * 60))
-
+    yaml_map = run_facet_dir(default_facet_dir,
+                             run_facet_dir(user_facet_dir,
+                                           run_facet_dir(git_facet_dir)))
     return yaml_map
 
 
