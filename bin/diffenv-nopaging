@@ -6,9 +6,9 @@ import os
 from os.path import join
 from shutil import copyfile, copystat
 import requests
+from io import StringIO
 
-from diffenv.main import *
-from diffenv import diffviewer
+from diffenv import main, diffviewer
 
 # Handle arguments
 
@@ -37,7 +37,7 @@ outfilestream = sys.stdout if args.output is None else open(args.output, 'w')
 
 if args.add_hooks:
     # Install git hooks
-    hooks_dst = join(git_toplevel(), '.git', 'hooks', 'post-commit')
+    hooks_dst = join(main.git_toplevel(), '.git', 'hooks', 'post-commit')
     dirname = os.path.split(os.path.abspath(__file__))[0]
     # Find hooks dir relative to this file
     hooks_src = join(dirname, '..', 'hooks', 'post-commit')
@@ -47,7 +47,7 @@ if args.add_hooks:
     copystat(hooks_src, hooks_dst)
     print("virtualenv: Installed git post-commit hook to %s" % hooks_dst)
 elif args.compare is None:
-    env = collect_env()
+    env = main.collect_env()
     if args.share is not None:
         buf = StringIO()
         yaml.dump(env, buf)
@@ -60,16 +60,16 @@ elif args.compare is None:
         print()
     else:
         # Output our results
-        yaml.dump(env, outfilestream)
+        main.yaml.dump(env, outfilestream)
 
 else:
     if len(args.compare) == 0:
         # TODO compare to current state to most recent commit
         print("Git hook integration not implemented yet")
     else:
-        files = [read_file_or_url(name) for name in args.compare]
+        files = [main.read_file_or_url(name) for name in args.compare]
         if len(files) == 1:
-            files = [collect_env()] + files
+            files = [main.collect_env()] + files
 
         diffviewer.display_diff(files[0],
                                 files[1],

@@ -3,13 +3,11 @@ import sys
 import os
 from os import listdir
 from os.path import isfile, join
-import sys
 import requests
 import re
 from ruamel.yaml import YAML
 from ruamel.yaml.scanner import ScannerError
 from ruamel.yaml.comments import CommentedMap
-from io import StringIO
 
 yaml = YAML()
 
@@ -18,7 +16,7 @@ def run_facet(name, path):
     """ Run a facet and return the results as a Python object"""
     if not os.access(path, os.X_OK):
         sys.stderr.write("ERROR: Facet is not executable: %s" % path)
-        return (result + "ERROR: Facet is not executable: %s" % path)
+        return "ERROR: Facet is not executable: %s" % path
     try:
         process = subprocess.Popen([path], stdout=subprocess.PIPE)
         out, err = process.communicate()

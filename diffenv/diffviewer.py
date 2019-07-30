@@ -1,5 +1,5 @@
 import difflib
-from colorama import Fore, Back, Style, init
+from colorama import Fore, Back
 import collections
 from ruamel.yaml.comments import CommentedMap
 from ruamel.yaml import YAML
@@ -39,7 +39,6 @@ def color_diff(diff):
     marking = False
     col = 0
     for line in diff:
-        result = ''
         if not marking and A_MARKER in line:
             if B_MARKER in line:
                 # handle single-line case (if applicable?)
