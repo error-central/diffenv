@@ -10,33 +10,39 @@ import pathlib
 
 yaml = YAML()
 
-MAX_FILE_SIZE_HASH = 1024*1024 # 1 MB
+MAX_FILE_SIZE_HASH = 1024 * 1024  # 1 MB
+
 
 def md5(fname):
-  """  Get md5 hash of file. See: https://stackoverflow.com/a/3431838 """
-  hash_md5 = hashlib.md5()
-  with open(fname, "rb") as f:
-    for chunk in iter(lambda: f.read(4096), b""):
-      hash_md5.update(chunk)
-  return hash_md5.hexdigest()
+    """  Get md5 hash of file. See: https://stackoverflow.com/a/3431838 """
+    hash_md5 = hashlib.md5()
+    with open(fname, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
 
 
 def file_info(path):
-  if path.is_dir():
-    return collect_dir_info(path)
-  else:
-    filepath = str(path.absolute())
-    file_size_bytes = os.path.getsize(filepath)
-    file_mod_time = os.path.getmtime(filepath)
-    file_hash = ("-"*32) if (file_size_bytes > MAX_FILE_SIZE_HASH) else md5(filepath)
+    if path.is_dir():
+        return collect_dir_info(path)
+    else:
+        filepath = str(path.absolute())
+        file_size_bytes = os.path.getsize(filepath)
+        file_mod_time = os.path.getmtime(filepath)
+        file_hash = (
+            "-" *
+            32) if (
+            file_size_bytes > MAX_FILE_SIZE_HASH) else md5(filepath)
 
-    return ', '.join([str(file_size_bytes), str(file_mod_time)[:16], file_hash])
+        return ', '.join(
+            [str(file_size_bytes), str(file_mod_time)[:16], file_hash])
 
 
 def collect_dir_info(path):
-  return CommentedMap([(p.name or '.', file_info(p))
-                       for p in sorted(list(path.iterdir()),
-                                       reverse=True)])
+    return CommentedMap([(p.name or '.', file_info(p))
+                         for p in sorted(list(path.iterdir()),
+                                         reverse=True)])
+
 
 yaml.dump(collect_dir_info(pathlib.Path('.')),
           sys.stdout)
