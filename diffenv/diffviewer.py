@@ -41,7 +41,7 @@ def color_diff(diff):
     for line in diff:
         if not marking and A_MARKER in line:
             if B_MARKER in line:
-                # handle single-line case (if applicable?)
+                # Handle single-line case (if applicable?)
                 i = line.index(B_MARKER)
                 yield Fore.GREEN + line[:i] + Fore.RESET + Fore.RED + line[i:] + Fore.RESET
             else:
