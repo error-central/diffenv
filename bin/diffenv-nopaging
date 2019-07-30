@@ -37,14 +37,19 @@ if args.add_hooks:
 elif args.compare is None:
   env = collect_env()
   if args.share != None:
+    buf = StringIO()
+    yaml.dump(env, buf)
 
     upload_url = args.share
-    r = requests.post(upload_url, files={'diff': env})
-    print('Run the following line:')
+    r = requests.post(upload_url, files={'diff': buf.getvalue()})
+    print('Run the following line on comparison environment:')
+    print()
     print('diffenv --compare ' + r.text)
+    print()
   else:
     # Output our results
-    print(env, file=outfilestream)
+    yaml.dump(env, outfilestream)
+
 else:
   if len(args.compare) == 0:
     # TODO compare to current state to most recent commit
@@ -52,7 +57,7 @@ else:
   else:
     files = [read_file_or_url(name) for name in args.compare]
     if len(files) == 1:
-      files = [[l + '\n' for l in collect_env().splitlines()]] + files
+      files = [collect_env()] + files
 
     diffviewer.display_diff(files[0],
                             files[1],

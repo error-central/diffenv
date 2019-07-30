@@ -6,13 +6,15 @@ from os.path import isfile, join
 import sys
 import requests
 import re
+from ruamel.yaml import YAML
+from ruamel.yaml.scanner import ScannerError
+from ruamel.yaml.comments import CommentedMap
+from io import StringIO
+
+yaml = YAML()
 
 def run_facet(name, path):
-  """ Run a facet and return the results as string """
-  result = ''
-  result += '\n' + ('=' * 70) + '\n'
-  result += name
-  result += '\n' + ('=' * 70) + '\n'
+  """ Run a facet and return the results as a Python object"""
   if not os.access(path, os.X_OK):
     sys.stderr.write("ERROR: Facet is not executable: %s" % path)
     return (result + "ERROR: Facet is not executable: %s" % path)
@@ -21,11 +23,21 @@ def run_facet(name, path):
     out, err = process.communicate()
     if err:
       sys.stderr.write(err)
-    result += (out.decode("utf-8"))
+    result = (out.decode("utf-8"))
+    try:
+      y = yaml.load(result)
+      if type(y) == str:
+        result = result.strip()
+      else:
+        result = y
+    except ScannerError as e:
+      # does not seem to be valid yaml (or JSON)
+      pass
+    return result
+
   except subprocess.CalledProcessError as e:
     sys.stderr.write("Problem running %s: %e" % (path, e))
     result += "ERROR: Problem running %s: %e" % (path, e)
-  return result
 
 
 def git_toplevel():
@@ -63,13 +75,18 @@ def collect_env():
     join(git_facet_dir, f))] if os.path.isdir(git_facet_dir) else []
   git_facets.sort()
   # Sort all facets
-  facets = default_facets + user_facets + git_facets
+  facets = git_facets + user_facets + default_facets
 
   # Run the facets!
-  diffenv = ''
-  for (facet_dir, facet_name) in facets:
-    diffenv += run_facet(facet_name, join(facet_dir, facet_name))
-  return diffenv
+  yaml_map = CommentedMap([(facet_name,
+                            run_facet(facet_name, join(facet_dir, facet_name)))
+                           for (facet_dir, facet_name) in facets])
+
+  # format the facet output
+  for _, facet_name in facets:
+    yaml_map.yaml_set_comment_before_after_key(facet_name, ('=' * 60))
+
+  return yaml_map
 
 
 def read_file_or_url(name):
@@ -79,7 +96,7 @@ def read_file_or_url(name):
     if r.status_code == 404:
       raise Exception(name + ' yielded 404 status code. Your upload may have expired.')
     else:
-      return [l + '\n' for l in r.text.splitlines()]
+      return yaml.load(r.text)
   else:
     with open(name) as file:
-      return file.readlines()
+      return yaml.load(file)
