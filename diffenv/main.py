@@ -1,13 +1,13 @@
 import subprocess
 import sys
 import os
-from os import listdir
-from os.path import isfile, join
+from os.path import join
 import requests
 import re
 from ruamel.yaml import YAML
 from ruamel.yaml.scanner import ScannerError
 from ruamel.yaml.comments import CommentedMap
+from ruamel.yaml.scalarstring import LiteralScalarString
 import pathlib
 
 yaml = YAML()
@@ -25,14 +25,9 @@ def run_facet(name, path):
             sys.stderr.write(err)
         result = (out.decode("utf-8"))
         try:
-            y = yaml.load(result)
-            if isinstance(y, str):
-                result = result.strip()
-            else:
-                result = y
+            result = yaml.load(result)
         except ScannerError as e:
-            # does not seem to be valid yaml (or JSON)
-            pass
+            result = LiteralScalarString(result.strip())
         return result
 
     except subprocess.CalledProcessError as e:
@@ -58,7 +53,15 @@ def git_toplevel():
         return None
 
 
-def run_facet_dir(dirpath, structure=CommentedMap()):
+def yaml_format_item(structure, key, depth):
+    """
+    Attach bars and blank lines
+    """
+    structure.yaml_set_comment_before_after_key(
+        key, ('=' * (60 - depth * 2)), indent=depth * 2)
+
+
+def run_facet_dir(dirpath, structure=CommentedMap(), depth=0):
     """
     Execute facets in folder, recursively building a nested map.
     """
@@ -66,13 +69,15 @@ def run_facet_dir(dirpath, structure=CommentedMap()):
     if p.exists():
         for item in p.iterdir():
             if item.is_dir():
-                run_facet_dir(
-                    item, structure.get(item.name, CommentedMap()))
+                structure[item.name] = run_facet_dir(
+                    item,
+                    structure.get(item.name, CommentedMap()),
+                    depth + 1)
             elif item.name not in structure:
                 structure[item.name] = run_facet(
                     item.name, str(item.absolute()))
-                structure.yaml_set_comment_before_after_key(
-                    item.name, ('=' * 60))
+
+            yaml_format_item(structure, item.name, depth)
     return structure
 
 
