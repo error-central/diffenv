@@ -1,7 +1,7 @@
 import subprocess
 import sys
 import os
-from os.path import join
+from os.path import join, isfile
 import requests
 import re
 from ruamel.yaml import YAML
@@ -9,11 +9,12 @@ from ruamel.yaml.scanner import ScannerError
 from ruamel.yaml.comments import CommentedMap
 from ruamel.yaml.scalarstring import LiteralScalarString
 import pathlib
+import json
 
 yaml = YAML()
 
 
-def run_facet(name, path):
+def run_facet(path):
     """ Run a facet and return the results as a Python object """
     if not os.access(path, os.X_OK):
         sys.stderr.write("ERROR: Facet is not executable: %s" % path)
@@ -24,10 +25,14 @@ def run_facet(name, path):
         if err:
             sys.stderr.write(err)
         result = (out.decode("utf-8"))
+
         try:
-            result = yaml.load(result)
-        except ScannerError as e:
-            result = LiteralScalarString(result.strip())
+            result = json.loads(result)
+        except ValueError as e:
+            try:
+                result = yaml.load(result)
+            except ScannerError as e:
+                result = LiteralScalarString(result.strip())
         return result
 
     except subprocess.CalledProcessError as e:
@@ -61,7 +66,7 @@ def yaml_format_item(structure, key, depth):
         key, ('=' * (60 - depth * 2)), indent=depth * 2)
 
 
-def run_facet_dir(dirpath, structure=CommentedMap(), depth=0):
+def extract_facet_dir(dirpath, structure=CommentedMap(), depth=0):
     """
     Execute facets in folder, recursively building a nested map.
     """
@@ -69,34 +74,63 @@ def run_facet_dir(dirpath, structure=CommentedMap(), depth=0):
     if p.exists():
         for item in p.iterdir():
             if item.is_dir():
-                structure[item.name] = run_facet_dir(
+                structure[item.name] = extract_facet_dir(
                     item,
                     structure.get(item.name, CommentedMap()),
                     depth + 1)
             elif item.name not in structure:
-                structure[item.name] = run_facet(
-                    item.name, str(item.absolute()))
+                structure[item.name] = str(item.absolute())
 
             yaml_format_item(structure, item.name, depth)
     return structure
 
 
-def collect_env():
-            # Default facets
-    default_facet_dir = join(os.path.split(
-        os.path.abspath(__file__))[0], '..', 'facets')  # dir in our package
-
-    # User facets
-    user_facet_dir = os.path.expanduser('~/.diffenv/facets')
+def get_all_facets():
+    """
+    Collects paths to all facets in current system
+    """
 
     # Repo facets
     git_facet_dir = join(git_toplevel(), '.diffenv/facets')
+    facet_map = extract_facet_dir(git_facet_dir)
 
-    # Run the facets!
-    yaml_map = run_facet_dir(default_facet_dir,
-                             run_facet_dir(user_facet_dir,
-                                           run_facet_dir(git_facet_dir)))
-    return yaml_map
+    # User facets
+    user_facet_dir = os.path.expanduser('~/.diffenv/facets')
+    facet_map = extract_facet_dir(user_facet_dir, facet_map)
+
+    # Default facets
+    default_facet_dir = join(os.path.split(
+        os.path.abspath(__file__))[0], '..', 'facets')  # dir in our package
+    facet_map = extract_facet_dir(default_facet_dir, facet_map)
+
+    return facet_map
+
+
+def get_config(path):
+    if isfile(join(path, '.diffenv/config.yaml')):
+        with open(path) as f:
+            result = yaml.load(f)
+        return result
+
+
+default_config = {'facets': 'all'}
+config = get_config(git_toplevel()) or get_config('~/') or default_config
+
+
+def collect_env(facets=get_all_facets(), whitelist=config['facets']):
+    """
+    Collect environment info from facets specified in config files
+    """
+    if isinstance(facets, str):
+        return run_facet(facets)
+    elif whitelist == 'all':
+        for subdir in facets:
+            facets[subdir] = collect_env(facets[subdir], whitelist)
+        return facets
+    else:
+        for subdir in whitelist:
+            facets[subdir] = collect_env(facets[subdir], whitelist[subdir])
+        return facets
 
 
 def read_file_or_url(name):

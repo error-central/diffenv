@@ -1,0 +1,9 @@
+base:
+  - http://something.org/hashahshash.yaml
+  - http://another.org/foo.yaml
+facets:
+  git:
+    version:
+      _source: someurl/hash
+      _update_notify: yes
+      _params:  
