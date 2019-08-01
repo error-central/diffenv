@@ -106,12 +106,18 @@ def get_all_facets():
     return facet_map
 
 
-def get_config(path):
-    path = join(path, '.diffenv/config.yaml')
+def get_config(dirpath):
+    path = join(dirpath, '.diffenv/config.yaml')
     if isfile(path):
         with open(path) as f:
             result = yaml.load(f)
         return result
+    else:
+        path = join(dirpath, '.diffenv/config.yml')
+        if isfile(path):
+            with open(path) as f:
+                result = yaml.load(f)
+            return result
 
 
 default_config = {'facets': None}
@@ -125,7 +131,7 @@ def collect_env(facets=get_all_facets(), whitelist=config['facets']):
 
     if isinstance(facets, str):
         return run_facet(facets)
-    elif whitelist == None:
+    elif whitelist is None or isinstance(whitelist, str):
         for subdir in facets:
             facets[subdir] = collect_env(facets[subdir], whitelist)
         return facets

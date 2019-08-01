@@ -7,6 +7,7 @@ from os.path import join
 from shutil import copyfile, copystat
 import requests
 from io import StringIO
+from signal import signal, SIGPIPE, SIG_DFL
 
 from diffenv import main, diffviewer
 
@@ -29,11 +30,28 @@ parser.add_argument(
     nargs='?',
     const='https://transfer.sh',
     help='Share as POST with provided URL')
+parser.add_argument('--config', help='load config from specific file')
+parser.add_argument('--ignore-config',
+                    action='store_true',
+                    help='ignore configs and run all facets')
 
 args = parser.parse_args()
 
 # Handle outputting to file or stdout
 outfilestream = sys.stdout if args.output is None else open(args.output, 'w')
+signal(SIGPIPE,SIG_DFL)
+
+
+default_config = {'facets': None}
+if args.config:
+    config = main.get_config(args.config)
+elif args.ignore_config:
+    config = default_config
+else:
+    config = main.get_config(main.git_toplevel()) or main.get_config('~/') or default_config
+facets = main.get_all_facets()
+whitelist = config['facets']
+
 
 if args.add_hooks:
     # Install git hooks
@@ -47,10 +65,10 @@ if args.add_hooks:
     copystat(hooks_src, hooks_dst)
     print("virtualenv: Installed git post-commit hook to %s" % hooks_dst)
 elif args.compare is None:
-    env = main.collect_env()
+    env = main.collect_env(facets, whitelist)
     if args.share is not None:
         buf = StringIO()
-        yaml.dump(env, buf)
+        main.yaml.dump(env, buf)
 
         upload_url = args.share
         r = requests.post(upload_url, files={'diff': buf.getvalue()})
@@ -60,7 +78,10 @@ elif args.compare is None:
         print()
     else:
         # Output our results
-        main.yaml.dump(env, outfilestream)
+        try:
+            main.yaml.dump(env, outfilestream)
+        except BrokenPipeError as e:
+          pass
 
 else:
     if len(args.compare) == 0:
@@ -69,8 +90,11 @@ else:
     else:
         files = [main.read_file_or_url(name) for name in args.compare]
         if len(files) == 1:
-            files = [main.collect_env()] + files
+            files = [main.collect_env(facets, whitelist)] + files
 
-        diffviewer.display_diff(files[0],
-                                files[1],
-                                outfilestream)
+        try:
+            diffviewer.display_diff(files[0],
+                                    files[1],
+                                    outfilestream)
+        except BrokenPipeError as e:
+          pass
