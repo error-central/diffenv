@@ -114,7 +114,7 @@ def get_config(path):
         return result
 
 
-default_config = {'facets': 'all'}
+default_config = {'facets': None}
 config = get_config(git_toplevel()) or get_config('~/') or default_config
 
 
@@ -122,15 +122,20 @@ def collect_env(facets=get_all_facets(), whitelist=config['facets']):
     """
     Collect environment info from facets specified in config files
     """
+
     if isinstance(facets, str):
         return run_facet(facets)
-    elif whitelist == 'all':
+    elif whitelist == None:
         for subdir in facets:
             facets[subdir] = collect_env(facets[subdir], whitelist)
         return facets
     else:
         for subdir in whitelist:
             facets[subdir] = collect_env(facets[subdir], whitelist[subdir])
+        subdirs = [s for s in facets]
+        for subdir in subdirs:
+            if subdir not in whitelist:
+                del facets[subdir]
         return facets
 
 

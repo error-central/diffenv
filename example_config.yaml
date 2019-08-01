@@ -1,3 +1,4 @@
 facets:
   nodejs:
     node-version:
+  shell:
