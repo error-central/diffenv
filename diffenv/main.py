@@ -13,6 +13,7 @@ import json
 
 yaml = YAML()
 
+
 def run_facet(path):
     """ Run a facet and return the results as a Python object """
     if not os.access(path, os.X_OK):
@@ -106,7 +107,8 @@ def get_all_facets():
 
 
 def get_config(path):
-    if isfile(join(path, '.diffenv/config.yaml')):
+    path = join(path, '.diffenv/config.yaml')
+    if isfile(path):
         with open(path) as f:
             result = yaml.load(f)
         return result
