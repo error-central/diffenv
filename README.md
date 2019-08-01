@@ -3,6 +3,8 @@ Compare development environments
 
 ## Install
 
+To install normally:
+
 ```bash
 pip3 install diffenv
 # call command with
@@ -12,11 +14,11 @@ diffenv
 
 ## Development
 
-In order to run a development install run:
+If you are developing locally, do _not_ install as above, and instead run the following in the repo root directory:
 
 ```bash
 # depending on your setup you may have to prefix sudo to this command
-python3 setup.py develop
+pip install --editable .
 ```
 
 The above should keep updating with local changes to your repository.

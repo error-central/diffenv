@@ -13,7 +13,6 @@ import json
 
 yaml = YAML()
 
-
 def run_facet(path):
     """ Run a facet and return the results as a Python object """
     if not os.access(path, os.X_OK):

@@ -8,7 +8,7 @@ def readme():
 
 setup(
     name='diffenv',
-    version='0.1',
+    version='0.1.1',
     author='Stan James, Gabriel Pickard',
     author_email='wanderingstan@gmail.com, wergomat@gmail.com',
     url='http://github.com/error-central/diffenv',
@@ -21,6 +21,7 @@ setup(
     install_requires=[
         'colorama',
         'requests',
+        'ruamel.yaml'
     ],
     zip_safe=False,
 
