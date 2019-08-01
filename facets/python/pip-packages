@@ -1,5 +1,4 @@
-#!/usr/bin/env python
 
-import pip
-for pmd in pip.get_installed_distributions(local_only=True):
-    print(str(pmd.project_name) + ': ' + str(pmd.version))
+#!/bin/bash
+
+pip list --format=freeze  | sed 's/==/:/g'
