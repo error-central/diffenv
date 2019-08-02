@@ -1,4 +1,7 @@
 facets:
-  nodejs:
-    node-version:
+  python:
+  git:
+  os:
   shell:
+  diffenv-version:
+  directory:
