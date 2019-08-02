@@ -31,7 +31,7 @@ parser.add_argument(
 parser.add_argument(
     '--post',
     default='https://transfer.sh',
-    help='POST env to specific URL')
+    help='POST env to specific URL when sharing. only valid with --share')
 parser.add_argument('--config', help='load config from specific file')
 parser.add_argument('--ignore-config',
                     action='store_true',
@@ -68,18 +68,15 @@ if args.add_hooks:
     print("virtualenv: Installed git post-commit hook to %s" % hooks_dst)
 elif args.compare is None:
     env = main.collect_env(facets, whitelist)
-    if args.share or args.post is not None:
+    if args.share:
         buf = StringIO()
         main.yaml.dump(env, buf)
         upload_url = args.post
         r = requests.post(upload_url, files={'diff': buf.getvalue()})
-        if args.share:
-            print('Run the following line on comparison environment:')
-            print()
-            print('diffenv --compare ' + r.text)
-            print()
-        else:
-            print('diffenv POSTed to ' + upload_url)
+        print('Run the following line on comparison environment:')
+        print()
+        print('diffenv --compare ' + r.text)
+        print()
     else:
         # Output our results
         try:
