@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 pip list --format=freeze  | sed 's/==/:/g'
