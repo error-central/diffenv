@@ -14,7 +14,8 @@ from diffenv import main, diffviewer
 # Handle arguments
 
 parser = argparse.ArgumentParser(
-    description='Diff total development environment.')
+    description='Diff your total environment. Run without any params to simply output current environment state as YAML.',
+    epilog='More information and source code at https://github.com/error-central/diffenv')
 parser.add_argument('-o', '--output', help='output to file instead of stdout')
 parser.add_argument(
     '-c',
@@ -41,7 +42,7 @@ args = parser.parse_args()
 
 # Handle outputting to file or stdout
 outfilestream = sys.stdout if args.output is None else open(args.output, 'w')
-signal(SIGPIPE,SIG_DFL)
+signal(SIGPIPE, SIG_DFL)
 
 
 default_config = {'facets': None}
@@ -50,7 +51,8 @@ if args.config:
 elif args.ignore_config:
     config = default_config
 else:
-    config = main.get_config(main.git_toplevel()) or main.get_config('~/') or default_config
+    config = main.get_config(main.git_toplevel()) or main.get_config(
+        '~/') or default_config
 facets = main.get_all_facets()
 whitelist = config['facets']
 
@@ -82,7 +84,7 @@ elif args.compare is None:
         try:
             main.yaml.dump(env, outfilestream)
         except BrokenPipeError as e:
-          pass
+            pass
 
 else:
     if len(args.compare) == 0:
@@ -98,4 +100,4 @@ else:
                                     files[1],
                                     outfilestream)
         except BrokenPipeError as e:
-          pass
+            pass
