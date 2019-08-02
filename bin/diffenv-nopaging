@@ -47,10 +47,13 @@ signal(SIGPIPE, SIG_DFL)
 
 default_config = {'facets': None}
 if args.config:
+    # User specificed a config file
     config = main.get_config(args.config)
 elif args.ignore_config:
+    # User has elected to ignore config (use all facets)
     config = default_config
 else:
+    # Find config file in ./diffenv of git repo or user directory
     config = main.get_config(main.git_toplevel()) or main.get_config(
         '~/') or default_config
 facets = main.get_all_facets()
