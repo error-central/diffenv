@@ -19,17 +19,19 @@ parser.add_argument('-o', '--output', help='output to file instead of stdout')
 parser.add_argument(
     '-c',
     '--compare',
-    nargs='*',
-    help='display diff between two environments')
+    help='file or URL to compare against the current env')
 parser.add_argument(
     '--add-hooks',
     action='store_true',
-    help='install diffenv git hooks in current repo')
+    help='install git hooks in current repo and exit')
 parser.add_argument(
     '--share',
-    nargs='?',
-    const='https://transfer.sh',
-    help='Share as POST with provided URL')
+    action='store_true',
+    help='store current env and return URL that can be shared')
+parser.add_argument(
+    '--post',
+    default='https://transfer.sh',
+    help='POST env to specific URL')
 parser.add_argument('--config', help='load config from specific file')
 parser.add_argument('--ignore-config',
                     action='store_true',
@@ -66,16 +68,18 @@ if args.add_hooks:
     print("virtualenv: Installed git post-commit hook to %s" % hooks_dst)
 elif args.compare is None:
     env = main.collect_env(facets, whitelist)
-    if args.share is not None:
+    if args.share or args.post is not None:
         buf = StringIO()
         main.yaml.dump(env, buf)
-
-        upload_url = args.share
+        upload_url = args.post
         r = requests.post(upload_url, files={'diff': buf.getvalue()})
-        print('Run the following line on comparison environment:')
-        print()
-        print('diffenv --compare ' + r.text)
-        print()
+        if args.share:
+            print('Run the following line on comparison environment:')
+            print()
+            print('diffenv --compare ' + r.text)
+            print()
+        else:
+            print('diffenv POSTed to ' + upload_url)
     else:
         # Output our results
         try:
