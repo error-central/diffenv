@@ -32,7 +32,7 @@ parser.add_argument(
 parser.add_argument(
     '--post',
     default='https://transfer.sh',
-    help='POST env to specific URL when sharing. only valid with --share')
+    help='POST env to specific URL when sharing; must be used with --share')
 parser.add_argument('--config', help='load config from specific file')
 parser.add_argument('--ignore-config',
                     action='store_true',
