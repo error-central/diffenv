@@ -3,7 +3,6 @@
 import sys
 import argparse
 import os
-from os.path import join
 from shutil import copyfile, copystat
 import requests
 from io import StringIO
@@ -48,24 +47,28 @@ signal(SIGPIPE, SIG_DFL)
 default_config = {'facets': None}
 if args.config:
     # User specificed a config file
-    config = main.get_config(args.config)
+    config = main.load_config_file(args.config)
 elif args.ignore_config:
     # User has elected to ignore config (use all facets)
     config = default_config
 else:
     # Find config file in ./diffenv of git repo or user directory
-    config = main.get_config(main.git_toplevel()) or main.get_config(
-        '~/') or default_config
+    git_path = os.path.join(main.git_toplevel(), '.diffenv/config.yaml')
+    user_path = os.path.expanduser('~/.diffenv/config.yaml')
+    config = (
+        main.load_config_file(git_path) or
+        main.load_config_file(user_path) or
+        default_config)
 facets = main.get_all_facets()
 whitelist = config['facets']
 
 
 if args.add_hooks:
     # --add-hooks : Install git hooks
-    hooks_dst = join(main.git_toplevel(), '.git', 'hooks', 'post-commit')
+    hooks_dst = os.path.join(main.git_toplevel(), '.git', 'hooks', 'post-commit')
     dirname = os.path.split(os.path.abspath(__file__))[0]
     # Find hooks dir relative to this file
-    hooks_src = join(dirname, '..', 'hooks', 'post-commit')
+    hooks_src = os.path.join(dirname, '..', 'hooks', 'post-commit')
     # Copy the hook
     copyfile(hooks_src, hooks_dst)
     # Make executable
