@@ -4,6 +4,15 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+
+    {
+      "name": "Python: diffenv share",
+      "type": "python",
+      "request": "launch",
+      "args": ["--compare", "https://transfer.sh/7PQpR/diff"],
+      "program": "${workspaceFolder}/bin/diffenv-nopaging",
+      "console": "integratedTerminal"
+    },
     {
       "name": "Python: Current File",
       "type": "python",
