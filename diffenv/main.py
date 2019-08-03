@@ -145,9 +145,13 @@ def collect_env(facets=get_all_facets(), whitelist=config['facets']):
         return facets
 
 
-def read_file_or_url(name):
+def read_file_or_url(name: str):
+    """
+    Read a filename or a URL and return contents
+    """
     if re.match(r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+', name):
-        # it's a URL!
+        # It's a URL!
+        sys.stderr.write("Downloading " + name + "\n")
         r = requests.get(name)
         if r.status_code == 404:
             raise Exception(
