@@ -53,6 +53,10 @@ To compare your environment with @wanderingstan:
 diffenv -c https://raw.githubusercontent.com/error-central/diffenv/master/examples/stan-diffenv.yaml
 ```
 
+To share your environment with a coworker for comparison:
+```bash
+diffenv --share
+```
 ## Customization
 
 diffenv can be customized for a user or for a repo.  Customizations are put in a directory named `.diffenv` in the user's home directory or the git repos top directory.
