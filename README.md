@@ -1,5 +1,24 @@
 # diffenv
-Compare development environments.
+Output and compare all facets of development environments.
+
+Simplified example usage:
+```bash
+$ diffenv
+python:
+  python-version: Python 3.7.3
+shell:
+  envvars:
+    EDITOR: sublw
+    GIT_EDITOR: subl -w
+    API_ENDPOINT: http://api.lvh.me:4000
+    PRISMA_ENDPOINT: http://prisma:4466
+os:
+  timezone: 0200
+  version: Darwin 18.7.0 x86_64
+```
+
+[Full example output](https://raw.githubusercontent.com/error-central/diffenv/master/examples/stan-diffenv.yaml).
+
 
 ## Installation
 
@@ -8,8 +27,6 @@ To install normally:
 
 ```bash
 pip3 install diffenv
-# call command with
-diffenv
 ```
 
 ### Development
@@ -21,17 +38,19 @@ If you are developing locally, do _not_ install as above, and instead run the fo
 pip install --editable .
 ```
 
-The above should keep updating with local changes to your repository.
+Now `diffenv` will always point to your local repo, including any changes.
 
-If you ran the above command with `sudo`, you may have to do the following:
 
-```bash
-sudo chown -R youruser:youruser diffenv.egg-info dist
+## Use
+
+To output your current development environment to stderr:
+```
+diffenv
 ```
 
-Now you can run
+To compare your environment with @wanderingstan:
 ```bash
-diffenv
+diffenv -c https://raw.githubusercontent.com/error-central/diffenv/master/examples/stan-diffenv.yaml
 ```
 
 ## Customization
