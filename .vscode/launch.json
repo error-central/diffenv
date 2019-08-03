@@ -5,11 +5,30 @@
   "version": "0.2.0",
   "configurations": [
 
+
     {
-      "name": "Python: diffenv share",
+      "name": "Python: diffenv",
       "type": "python",
       "request": "launch",
-      "args": ["--compare", "https://transfer.sh/7PQpR/diff"],
+      "program": "${workspaceFolder}/bin/diffenv-nopaging",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Python: diffenv --config",
+      "type": "python",
+      "request": "launch",
+      "args": ["--config", "${workspaceFolder}/examples/config-small.yaml"],
+      "program": "${workspaceFolder}/bin/diffenv-nopaging",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Python: diffenv --compare https://transfer.sh/7PQpR/diff",
+      "type": "python",
+      "request": "launch",
+      "args": [
+        "--compare",
+        "https://transfer.sh/7PQpR/diff"
+      ],
       "program": "${workspaceFolder}/bin/diffenv-nopaging",
       "console": "integratedTerminal"
     },
