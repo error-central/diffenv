@@ -14,6 +14,14 @@
       "console": "integratedTerminal"
     },
     {
+      "name": "Python: diffenv in non-git dir",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/diffenv-nopaging",
+      "console": "integratedTerminal",
+      "cwd": "~/Downloads/nogit"
+    },
+    {
       "name": "Python: diffenv --config",
       "type": "python",
       "request": "launch",
