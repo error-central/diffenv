@@ -37,7 +37,6 @@ parser.add_argument('--ignore-config',
                     help='ignore configs and run all facets')
 
 args = parser.parse_args()
-git_toplevel = main.git_toplevel()
 
 # Handle outputting to file or stdout
 outfilestream = sys.stdout if args.output is None else open(args.output, 'w')
@@ -55,7 +54,7 @@ else:
     # Find config file in ./diffenv of git repo or user directory
     try:
         git_config = main.load_config_file(
-            os.path.join(git_toplevel, '.diffenv/config.yaml'))
+            os.path.join(main.git_toplevel, '.diffenv/config.yaml'))
     except:
         git_config = None
     try:
@@ -70,7 +69,11 @@ whitelist = config['facets']
 
 if args.add_hooks:
     # --add-hooks : Install git hooks
-    hooks_dst = os.path.join(main.git_toplevel(), '.git', 'hooks', 'post-commit')
+    if main.git_toplevel is None:
+        sys.stderr.write("ERROR: Not in a git repot, so cannot add git hooks.")
+        exit(1)
+
+    hooks_dst = os.path.join(main.git_toplevel, '.git', 'hooks', 'post-commit')
     dirname = os.path.split(os.path.abspath(__file__))[0]
     # Find hooks dir relative to this file
     hooks_src = os.path.join(dirname, '..', 'hooks', 'post-commit')

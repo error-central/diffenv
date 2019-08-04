@@ -14,6 +14,14 @@ import git
 
 yaml = YAML()
 
+# Get absolute path of current git repo, if we're in one.
+try:
+    git_repo = git.Repo(path, search_parent_directories=True)
+    git_toplevel = git_repo.git.rev_parse("--show-toplevel")
+except:
+    # Todo: why cant' we catch git.exc.InvalidGitRepositoryError: ?
+    git_toplevel = None
+
 
 def run_facet(path):
     """ Run a facet and return the results as a Python object """
@@ -41,20 +49,6 @@ def run_facet(path):
         result += "ERROR: Problem running %s: %e" % (path, e)
 
 
-def git_toplevel(path='.'):
-    """
-    Return absolute path of current git repo, if we're in one.
-    Otherwise return None
-    """
-    try:
-        git_repo = git.Repo(path, search_parent_directories=True)
-        git_root = git_repo.git.rev_parse("--show-toplevel")
-        return git_root
-    except:
-        # Todo: why cant' we catch git.exc.InvalidGitRepositoryError: ?
-        return None
-
-
 def yaml_format_item(structure, key, depth):
     """
     Attach bars and blank lines
@@ -63,9 +57,12 @@ def yaml_format_item(structure, key, depth):
         key, ('=' * (60 - depth * 2)), indent=depth * 2)
 
 
-def extract_facet_dir(dirpath, structure=CommentedMap(), depth=0):
+def extract_facet_dir(dirpath, structure, depth=0):
     """
-    Execute facets in folder, recursively building a nested map.
+    Execute facets in folder, recursively buildingNone a nested map.
+    dirpath: directory to find facets in
+    structure: exiting structure of facets that we will add to
+
     TODO: Does it really *execute* facets?
     TODO: What type does it return??
     """
@@ -86,16 +83,20 @@ def extract_facet_dir(dirpath, structure=CommentedMap(), depth=0):
 
 def get_all_facets():
     """
-    Collects paths to all facets in current system
+    Collects paths to all facets in current system.
+    They are accumulated in `facet_map`
+    Returns a facet map of type... ???
+    TODO (Gabe) : Document inputs/outputs of this function
     """
-
-    # Repo facets
-    git_facet_dir = join(git_toplevel(), '.diffenv/facets')
-    facet_map = extract_facet_dir(git_facet_dir)
 
     # User facets
     user_facet_dir = os.path.expanduser('~/.diffenv/facets')
-    facet_map = extract_facet_dir(user_facet_dir, facet_map)
+    facet_map = extract_facet_dir(user_facet_dir, CommentedMap())
+
+    # Repo facets (if in git repo)
+    if git_toplevel is not None:
+        git_facet_dir = join(git_toplevel, '.diffenv/facets')
+        facet_map = extract_facet_dir(git_facet_dir, facet_map)
 
     # Default facets
     default_facet_dir = join(os.path.split(
@@ -115,9 +116,11 @@ def load_config_file(path:str):
 
 def collect_env(facets, whitelist):
     """
-    Collect environment info from facets specified in config files
+    Recursively collect environment info from facets specified in config files
+    TODO (Gabe): document how this function works. What are the inputs and outputs?
     """
     if isinstance(facets, str):
+        # Actually run the facet and return the results
         return run_facet(facets)
     elif whitelist is None or isinstance(whitelist, str):
         for subdir in facets:
