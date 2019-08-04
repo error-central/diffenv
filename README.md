@@ -1,6 +1,11 @@
 # diffenv
 Output and compare all facets of development environments.
 
+##  Overview
+
+diffenv gathers and compares runtime environment metadata, intended to remedy "It works on my machine but not on yours -- Why?"
+
+
 Simplified example usage:
 ```bash
 $ diffenv
