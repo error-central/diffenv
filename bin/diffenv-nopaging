@@ -11,7 +11,6 @@ from signal import signal, SIGPIPE, SIG_DFL
 from diffenv import main, diffviewer
 
 # Handle arguments
-
 parser = argparse.ArgumentParser(
     description='Diff your total environment. Run without any params to simply output current environment state as YAML.',
     epilog='More information and source code at https://github.com/error-central/diffenv')
@@ -38,12 +37,13 @@ parser.add_argument('--ignore-config',
                     help='ignore configs and run all facets')
 
 args = parser.parse_args()
+git_toplevel = main.git_toplevel()
 
 # Handle outputting to file or stdout
 outfilestream = sys.stdout if args.output is None else open(args.output, 'w')
 signal(SIGPIPE, SIG_DFL)
 
-
+# Determine what config to use
 default_config = {'facets': None}
 if args.config:
     # User specificed a config file
@@ -53,12 +53,17 @@ elif args.ignore_config:
     config = default_config
 else:
     # Find config file in ./diffenv of git repo or user directory
-    git_path = os.path.join(main.git_toplevel(), '.diffenv/config.yaml')
-    user_path = os.path.expanduser('~/.diffenv/config.yaml')
-    config = (
-        main.load_config_file(git_path) or
-        main.load_config_file(user_path) or
-        default_config)
+    try:
+        git_config = main.load_config_file(
+            os.path.join(git_toplevel, '.diffenv/config.yaml'))
+    except:
+        git_config = None
+    try:
+        user_config = main.load_config_file(
+            os.path.expanduser('~/.diffenv/config.yaml'))
+    except:
+        user_config = None
+    config = (git_config or user_config or default_config)
 facets = main.get_all_facets()
 whitelist = config['facets']
 
