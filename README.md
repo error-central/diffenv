@@ -3,8 +3,7 @@ Output and compare all facets of development environments.
 
 ##  Overview
 
-diffenv gathers and compares runtime environment metadata, intended to remedy "It works on my machine but not on yours -- Why?"
-
+diffenv gathers and compares runtime environment metadata, intended to remedy the common developer situation of "But it works on my machine! What's different about your environment?"
 
 Simplified example usage:
 ```bash
