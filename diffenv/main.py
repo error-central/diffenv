@@ -10,6 +10,7 @@ from ruamel.yaml.comments import CommentedMap
 from ruamel.yaml.scalarstring import LiteralScalarString
 import pathlib
 import json
+import git
 
 yaml = YAML()
 
@@ -40,21 +41,17 @@ def run_facet(path):
         result += "ERROR: Problem running %s: %e" % (path, e)
 
 
-def git_toplevel():
+def git_toplevel(path='.'):
     """
     Return absolute path of current git repo, if we're in one.
     Otherwise return None
     """
     try:
-        process = subprocess.Popen(
-            ['git', 'rev-parse', '--show-toplevel'], stdout=subprocess.PIPE)
-        out, err = process.communicate()
-        if err:
-            sys.stderr.write(err)
-        return (out.decode("utf-8").strip())
-    except subprocess.CalledProcessError as e:
-        sys.stderr.write(
-            "Problem running git rev-parse --show-toplevel: %e" % e)
+        git_repo = git.Repo(path, search_parent_directories=True)
+        git_root = git_repo.git.rev_parse("--show-toplevel")
+        return git_root
+    except:
+        # Todo: why cant' we catch git.exc.InvalidGitRepositoryError: ?
         return None
 
 
@@ -69,6 +66,8 @@ def yaml_format_item(structure, key, depth):
 def extract_facet_dir(dirpath, structure=CommentedMap(), depth=0):
     """
     Execute facets in folder, recursively building a nested map.
+    TODO: Does it really *execute* facets?
+    TODO: What type does it return??
     """
     p = pathlib.Path(dirpath)
     if p.exists():
@@ -106,7 +105,7 @@ def get_all_facets():
     return facet_map
 
 
-def load_config_file(path):
+def load_config_file(path:str):
     """
     Load a config file formatted in YAML
     """
