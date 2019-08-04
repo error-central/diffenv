@@ -21,7 +21,8 @@ setup(
     install_requires=[
         'colorama',
         'requests',
-        'ruamel.yaml'
+        'ruamel.yaml',
+        'gitpython'
     ],
     zip_safe=False,
 
