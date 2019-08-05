@@ -2,4 +2,4 @@
 
 # TODO: Document what this is intended to document
 
-netstat -tuln
+netstat -tuln 2>&1

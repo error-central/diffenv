@@ -1,5 +1,3 @@
 #!/bin/bash
-if hash php 2>/dev/null; then
-  php --version
-fi
+php --version 2>&1
 

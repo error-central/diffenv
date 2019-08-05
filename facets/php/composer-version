@@ -1,5 +1,3 @@
 #!/bin/bash
-if hash composer 2>/dev/null; then
-  composer --version
-fi
+composer --version 2>&1
 

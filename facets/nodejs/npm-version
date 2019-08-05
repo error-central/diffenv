@@ -1,2 +1,2 @@
 #!/bin/bash
-npm --version
+npm --version  2>&1

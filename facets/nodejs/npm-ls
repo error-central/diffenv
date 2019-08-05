@@ -1,2 +1,2 @@
 #!/bin/bash
-npm ls --json
+npm ls --json  2>&1

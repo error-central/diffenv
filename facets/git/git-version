@@ -1,2 +1,2 @@
 #!/bin/bash
-git --version
+git --version 2>&1
