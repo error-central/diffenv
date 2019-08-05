@@ -94,11 +94,15 @@ elif args.compare is not None:
 
 elif args.share:
     # --share : Get a shareable link
+    sys.stderr.write("Collecting env...\r")
     env = main.collect_env(facets, whitelist)
     buf = StringIO()
     main.yaml.dump(env, buf)
     upload_url = args.post
+    sys.stderr.write("\033[K")
+    sys.stderr.write("Uploading...\r")
     r = requests.post(upload_url, files={'diff': buf.getvalue()})
+    sys.stderr.write("\033[K")
     print('Run the following line on comparison environment:')
     print()
     print('diffenv --compare ' + r.text)
