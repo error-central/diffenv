@@ -142,8 +142,10 @@ def read_file_or_url(name: str):
     """
     if re.match(r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+', name):
         # It's a URL!
-        sys.stderr.write("Downloading " + name + "\n")
+        sys.stderr.write("\033[K")
+        sys.stderr.write("Downloading " + name + "\r")
         r = requests.get(name)
+        sys.stderr.write("\033[K")
         if r.status_code == 404:
             raise Exception(
                 name + ' yielded 404 status code. Your upload may have expired.')
