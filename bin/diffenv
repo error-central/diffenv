@@ -1,2 +1,9 @@
 #!/usr/bin/env bash
-diffenv-nopaging "$@" | less -FRX
+
+# suppress colors if we are not outputting to terminal
+if [ -t 1 ]
+then
+    diffenv-nopaging "$@" | less -FRX
+else
+    diffenv-nopaging --no-color "$@" | less -FRX
+fi

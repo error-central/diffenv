@@ -35,8 +35,13 @@ parser.add_argument('--config', help='load config from specific file')
 parser.add_argument('--ignore-config',
                     action='store_true',
                     help='ignore configs and run all facets')
+parser.add_argument('--no-color',
+                    action='store_true',
+                    help="Don't color diff output")
 
 args = parser.parse_args()
+if args.output or args.share:
+  args.no_color = True
 
 # Handle outputting to file or stdout
 outfilestream = sys.stdout if args.output is None else open(args.output, 'w')
@@ -88,7 +93,10 @@ elif args.compare is not None:
     local_env = main.collect_env(facets, whitelist)
     compare_env = main.read_file_or_url(args.compare)
     try:
-        diffviewer.display_diff(local_env, compare_env, outfilestream)
+        diffviewer.display_diff(local_env,
+                                compare_env,
+                                outfilestream,
+                                not args.no_color)
     except BrokenPipeError as e:
         pass
 

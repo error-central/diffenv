@@ -28,11 +28,13 @@ def string_diff(fromlines, tolines):
                 yield line
 
 
-def display_diff(fromfile, tofile, outfilestream):
+def display_diff(fromfile, tofile, outfilestream, do_color):
     buf = StringIO()
     yaml.dump(diff_nested(fromfile, tofile), buf)
     difflines = buf.getvalue().splitlines(True)
-    outfilestream.writelines(color_diff(difflines))
+    if do_color:
+      difflines = color_diff(difflines)
+    outfilestream.writelines(difflines)
 
 
 def color_diff(diff):
