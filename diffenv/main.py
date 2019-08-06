@@ -123,7 +123,7 @@ def collect_env(facets, whitelist):
         # Actually run the facet and return the results
         return run_facet(facets)
     elif whitelist is None or isinstance(whitelist, str):
-        for subdir in facets:
+        for subdir in sorted(list(facets.keys())):
             facets[subdir] = collect_env(facets[subdir], whitelist)
         return facets
     else:
