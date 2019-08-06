@@ -37,7 +37,7 @@ def run_facet(path):
         else:
             combined = out_decoded
 
-        if out_decoded.strip():
+        if not out_decoded.strip():
             # If no stdout, then just return stderr
             return LiteralScalarString(combined)
 
