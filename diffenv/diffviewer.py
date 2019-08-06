@@ -70,7 +70,23 @@ def color_diff(diff):
 
 def diff_nested(m1, m2):
     """ Computes diff of two nested YAML structures. """
-    if isinstance(m1, collections.Mapping) and m2:
+    if isinstance(m1, str) or type(m1) != type(m2):
+        # We are comparing values (likely strings)directly
+        result = CommentedMap([(A_MARKER, m1),
+                               (B_MARKER, m2)])
+
+        if isinstance(m1, str) and isinstance(m2, str):
+            fromlines = str(m1).splitlines()
+            tolines = str(m2).splitlines()
+            if min(len(fromlines), len(tolines)) > 5:
+                diff = list(string_diff(fromlines, tolines))
+                if len(diff) / (len(fromlines) + len(tolines)) < 1.0:
+                    # there is material overlap
+                    # so show string diff
+                    result = LiteralScalarString('\n'.join(diff))
+        return result
+
+    elif isinstance(m1, collections.Mapping):
         # We are comparing dictionaries
         result = deepcopy(m1)
         for key in m1:
@@ -84,7 +100,7 @@ def diff_nested(m1, m2):
                 result[key] = diff_nested(None, m2[key])
         return result
 
-    elif isinstance(m1, collections.Sequence) and not isinstance(m1, str) and m2:
+    elif isinstance(m1, collections.Sequence):
         # We are comparing lists
         result = deepcopy(m1)
         if len(m1) == len(m2):
@@ -115,19 +131,8 @@ def diff_nested(m1, m2):
                     del m2[i2]
             return CommentedMap([(A_MARKER, m1),
                                  (B_MARKER, m2)])
-
     else:
-        # We are comparing values (likely strings) directly
-        result = CommentedMap([(A_MARKER, m1),
-                               (B_MARKER, m2)])
-        if isinstance(m1, str) and m2:
-            fromlines = m1.splitlines()
-            tolines = m2.splitlines()
-            if min(len(fromlines), len(tolines)) > 5:
-                diff = list(string_diff(fromlines, tolines))
-                if len(diff) / (len(fromlines) + len(tolines)) < 1.0:
-                    # there is material overlap
-                    # so show string diff
-                    result = LiteralScalarString('\n'.join(diff))
+        # Some other kind of type compared directly
+        return CommentedMap([(A_MARKER, m1),
+                             (B_MARKER, m2)])
 
-        return result
