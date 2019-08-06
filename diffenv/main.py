@@ -59,12 +59,11 @@ def yaml_format_item(structure, key, depth):
 
 def extract_facet_dir(dirpath, structure, depth=0):
     """
-    Execute facets in folder, recursively buildingNone a nested map.
+    Extract facets in folder, recursively building a nested map.
     dirpath: directory to find facets in
     structure: exiting structure of facets that we will add to
 
-    TODO: Does it really *execute* facets?
-    TODO: What type does it return??
+    returns: CommentedMap -- a formated yaml nested dictionary
     """
     p = pathlib.Path(dirpath)
     if p.exists():
@@ -85,8 +84,7 @@ def get_all_facets():
     """
     Collects paths to all facets in current system.
     They are accumulated in `facet_map`
-    Returns a facet map of type... ???
-    TODO (Gabe) : Document inputs/outputs of this function
+    Returns a formatted facet map of type CommentedMap
     """
 
     # User facets
@@ -117,7 +115,9 @@ def load_config_file(path:str):
 def collect_env(facets, whitelist):
     """
     Recursively collect environment info from facets specified in config files
-    TODO (Gabe): document how this function works. What are the inputs and outputs?
+    facets: Either a nested map from extract_facet_dir or a node in it, or a leaf (string containing path of facet)
+    whitelist: output from parsing a config file, detailing which facets to run
+    returns: a formated nested dictionary containing facet output
     """
     if isinstance(facets, str):
         # Actually run the facet and return the results
