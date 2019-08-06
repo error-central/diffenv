@@ -16,7 +16,7 @@ yaml = YAML()
 
 # Get absolute path of current git repo, if we're in one.
 try:
-    git_repo = git.Repo(path, search_parent_directories=True)
+    git_repo = git.Repo('.', search_parent_directories=True)
     git_toplevel = git_repo.git.rev_parse("--show-toplevel")
 except:
     # Todo: why cant' we catch git.exc.InvalidGitRepositoryError: ?
