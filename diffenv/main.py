@@ -27,15 +27,15 @@ def run_facet(path):
     """ Run a facet and return the results as a Python object """
     if not os.access(path, os.X_OK):
         sys.stderr.write("ERROR: Facet is not executable: %s" % path)
-        return "ERROR: Facet is not executable: %s" % path
+        return "WARNING: Skipping non-executable facet: %s" % path
     try:
-        process = subprocess.Popen([path], stdout=subprocess.PIPE)
+        process = subprocess.Popen([path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = process.communicate()
         if err:
             # Echo process stderr
-            sys.stderr.write(err)
-        result = (out.decode("utf-8") +
-            (err.decode("utf-8") if err else ""))
+            sys.stderr.write(err.decode("utf-8"))
+            out += err
+        result = out.decode("utf-8")
 
         try:
             result = json.loads(result)
