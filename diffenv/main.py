@@ -31,20 +31,28 @@ def run_facet(path):
     try:
         process = subprocess.Popen([path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = process.communicate()
+        out_decoded = out.decode("utf-8")
         if err:
-            # Echo process stderr
-            sys.stderr.write(err.decode("utf-8"))
-            out += err
-        result = out.decode("utf-8")
+            combined = out_decoded + err.decode("utf-8")
+        else:
+            combined = out_decoded
+
+        if out_decoded.strip():
+            # If no stdout, then just return stderr
+            return LiteralScalarString(combined)
 
         try:
-            result = json.loads(result)
+            # Try to parse JSON
+            return json.loads(out_decoded)
+            # NOTE: We're throwing away stderr if present
         except ValueError as e:
             try:
-                result = yaml.load(result)
+                # If that fails, try to parse YAML
+                return yaml.load(out_decoded)
+                # NOTE: We're throwing away stderr if present
             except ScannerError as e:
-                result = LiteralScalarString(result.strip())
-        return result
+                # If that fails, return raw output
+                return LiteralScalarString(out_decoded.strip())
 
     except subprocess.CalledProcessError as e:
         sys.stderr.write("Problem running %s: %e" % (path, e))
