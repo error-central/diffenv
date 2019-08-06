@@ -1,7 +1,5 @@
 #!/bin/bash
 
-if hash composer 2>/dev/null; then
-    composer show
-fi
+composer show
 
 

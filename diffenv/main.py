@@ -32,8 +32,10 @@ def run_facet(path):
         process = subprocess.Popen([path], stdout=subprocess.PIPE)
         out, err = process.communicate()
         if err:
+            # Echo process stderr
             sys.stderr.write(err)
-        result = (out.decode("utf-8"))
+        result = (out.decode("utf-8") +
+            (err.decode("utf-8") if err else ""))
 
         try:
             result = json.loads(result)
