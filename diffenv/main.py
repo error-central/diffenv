@@ -31,13 +31,13 @@ def run_facet(path):
     try:
         process = subprocess.Popen([path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = process.communicate()
-        out_decoded = out.decode("utf-8")
+        out_decoded = out.decode("utf-8").strip()
         if err:
             combined = out_decoded + err.decode("utf-8")
         else:
             combined = out_decoded
 
-        if not out_decoded.strip():
+        if not out_decoded:
             # If no stdout, then just return stderr
             return LiteralScalarString(combined)
 
@@ -52,11 +52,10 @@ def run_facet(path):
                 # NOTE: We're throwing away stderr if present
             except ScannerError as e:
                 # If that fails, return raw output
-                return LiteralScalarString(out_decoded.strip())
+                return LiteralScalarString(out_decoded)
 
     except subprocess.CalledProcessError as e:
-        sys.stderr.write("Problem running %s: %e" % (path, e))
-        result += "ERROR: Problem running %s: %e" % (path, e)
+        return LiteralScalarString("ERROR: Problem running %s: %e" % (path, e))
 
 
 def yaml_format_item(structure, key, depth):
