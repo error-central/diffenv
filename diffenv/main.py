@@ -19,7 +19,7 @@ try:
     git_repo = git.Repo('.', search_parent_directories=True)
     git_toplevel = git_repo.git.rev_parse("--show-toplevel")
 except:
-    # Todo: why cant' we catch git.exc.InvalidGitRepositoryError: ?
+    # TODO: why cant' we catch `git.exc.InvalidGitRepositoryError` ?
     git_toplevel = None
 
 
