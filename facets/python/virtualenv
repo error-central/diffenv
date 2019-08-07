@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Show path to currently activated virtualenv
+# See: https://stackoverflow.com/a/22004069/59913
+echo $VIRTUAL_ENV
