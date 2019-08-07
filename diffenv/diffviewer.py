@@ -22,9 +22,9 @@ B_MARKER_TXT = '++>'
 def diff(fromfile, tofile, do_color:bool):
     """
     Primary funciton. Display diff between two YAML files.
-    fromFile: YAML structrue
-    toFile: YAML structrue
-    doColor: Boolean indicating whether to colorize output
+    fromfile: YAML structrue
+    tofile: YAML structrue
+    do_color: Boolean indicating whether to colorize output
     """
     buf = StringIO()
     yaml.dump(diff_nested(fromfile, tofile), buf)
