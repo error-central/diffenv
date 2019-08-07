@@ -47,7 +47,12 @@ args = parser.parse_args()
 if args.output or args.share:
     args.no_color = True
 
-# Handle outputting to file or stdout
+if not sys.stdout.isatty():
+    # We're being piped or redirected, don't page
+    args.no_paging = True
+
+
+# Handle outputting to file, pager or stdout
 try:
     if args.output:
         outfilestream = open(args.output, 'w')
