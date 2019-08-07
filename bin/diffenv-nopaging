@@ -7,6 +7,7 @@ from shutil import copyfile, copystat
 import requests
 from io import StringIO
 from signal import signal, SIGPIPE, SIG_DFL
+import subprocess
 
 from diffenv import main, diffviewer, editor
 
@@ -38,92 +39,119 @@ parser.add_argument('--ignore-config',
 parser.add_argument('--no-color',
                     action='store_true',
                     help="Don't color diff output")
+parser.add_argument('--no-paging',
+                    action='store_true',
+                    help="Don't use less for paging output")
 
 args = parser.parse_args()
 if args.output or args.share:
-  args.no_color = True
+    args.no_color = True
 
 # Handle outputting to file or stdout
-outfilestream = sys.stdout if args.output is None else open(args.output, 'w')
-signal(SIGPIPE, SIG_DFL)
+try:
+    if args.output:
+        outfilestream = open(args.output, 'w')
+    elif args.no_paging:
+        outfilestream = sys.stdout
+    else:
+        # args stolen fron git source, see `man less`
+        pager = subprocess.Popen(['less', '-F', '-R', '-S', '-X', '-K'],
+                                 stdin=subprocess.PIPE,
+                                 stdout=sys.stdout)
 
-# Determine what config to use
-default_config = {'facets': None}
-if args.config:
-    # User specificed a config file
-    config = main.load_config_file(args.config)
-elif args.ignore_config:
-    # User has elected to ignore config (use all facets)
-    config = default_config
-else:
-    # Find config file in ./diffenv of git repo or user directory
-    try:
-        git_config = main.load_config_file(
-            os.path.join(main.git_toplevel, '.diffenv/config.yaml'))
-    except:
-        git_config = None
-    try:
-        user_config = main.load_config_file(
-            os.path.expanduser('~/.diffenv/config.yaml'))
-    except:
-        user_config = None
-    config = (git_config or user_config or default_config)
-facets = main.get_all_facets()
-whitelist = config['facets']
+        outfilestream = pager.stdin
 
 
-if args.add_hooks:
-    # --add-hooks : Install git hooks
-    if main.git_toplevel is None:
-        sys.stderr.write("ERROR: Not in a git repot, so cannot add git hooks.")
-        exit(1)
+    signal(SIGPIPE, SIG_DFL)
 
-    hooks_dst = os.path.join(main.git_toplevel, '.git', 'hooks', 'post-commit')
-    dirname = os.path.split(os.path.abspath(__file__))[0]
-    # Find hooks dir relative to this file
-    hooks_src = os.path.join(dirname, '..', 'hooks', 'post-commit')
-    # Copy the hook
-    copyfile(hooks_src, hooks_dst)
-    # Make executable
-    copystat(hooks_src, hooks_dst)
-    print("virtualenv: Installed git post-commit hook to %s" % hooks_dst)
+    # Determine what config to use
+    default_config = {'facets': None}
+    if args.config:
+        # User specificed a config file
+        config = main.load_config_file(args.config)
+    elif args.ignore_config:
+        # User has elected to ignore config (use all facets)
+        config = default_config
+    else:
+        # Find config file in ./diffenv of git repo or user directory
+        try:
+            git_config = main.load_config_file(
+                os.path.join(main.git_toplevel, '.diffenv/config.yaml'))
+        except:
+            git_config = None
+        try:
+            user_config = main.load_config_file(
+                os.path.expanduser('~/.diffenv/config.yaml'))
+        except:
+            user_config = None
+        config = (git_config or user_config or default_config)
+    facets = main.get_all_facets()
+    whitelist = config['facets']
 
-elif args.compare is not None:
-    # --compare : compare with file or url
-    local_env = main.collect_env(facets, whitelist)
-    compare_env = main.read_file_or_url(args.compare)
-    try:
-        diff = diffviewer.diff(local_env,
-                                compare_env,
-                                not args.no_color)
-        outfilestream.writelines(diff)
-    except BrokenPipeError as e:
-        # TODO (Gabe) : We should comment why we ignore this error.
-        pass
 
-elif args.share:
-    # --share : Get a shareable link
-    sys.stderr.write("Collecting env...\r")
-    env = main.collect_env(facets, whitelist)
-    yaml_stream = StringIO()
-    main.yaml.dump(env, yaml_stream)
+    if args.add_hooks:
+        # --add-hooks : Install git hooks
+        if main.git_toplevel is None:
+            sys.stderr.write("ERROR: Not in a git repot, so cannot add git hooks.")
+            exit(1)
 
-    env_string = editor.raw_input_editor(default=yaml_stream.getvalue())
+        hooks_dst = os.path.join(main.git_toplevel, '.git', 'hooks', 'post-commit')
+        dirname = os.path.split(os.path.abspath(__file__))[0]
+        # Find hooks dir relative to this file
+        hooks_src = os.path.join(dirname, '..', 'hooks', 'post-commit')
+        # Copy the hook
+        copyfile(hooks_src, hooks_dst)
+        # Make executable
+        copystat(hooks_src, hooks_dst)
+        print("virtualenv: Installed git post-commit hook to %s" % hooks_dst)
 
-    upload_url = args.post
-    sys.stderr.write("\033[K")
-    sys.stderr.write("Uploading...\r")
-    r = requests.post(upload_url, files={'env.yaml': env_string})
-    sys.stderr.write("\033[K")
-    print('Run the following line on comparison environment:')
-    print()
-    print('diffenv --compare ' + r.text)
-    print()
+    elif args.compare is not None:
+        # --compare : compare with file or url
+        local_env = main.collect_env(facets, whitelist)
+        compare_env = main.read_file_or_url(args.compare)
+        try:
+            diff = diffviewer.diff(local_env,
+                                    compare_env,
+                                    not args.no_color)
+            outfilestream.writelines(diff)
+        except BrokenPipeError as e:
+            # TODO (Gabe) : We should comment why we ignore this error.
+            pass
 
-else:
-    # Simply output current env
-    env = main.collect_env(facets, whitelist)
-    try:
-        main.yaml.dump(env, outfilestream)
-    except BrokenPipeError as e:
+    elif args.share:
+        # --share : Get a shareable link
+        sys.stderr.write("Collecting env...\r")
+        env = main.collect_env(facets, whitelist)
+        yaml_stream = StringIO()
+        main.yaml.dump(env, yaml_stream)
+
+        env_string = editor.raw_input_editor(default=yaml_stream.getvalue())
+
+        upload_url = args.post
+        sys.stderr.write("\033[K")
+        sys.stderr.write("Uploading...\r")
+        r = requests.post(upload_url, files={'env.yaml': env_string})
+        sys.stderr.write("\033[K")
+        print('Run the following line on comparison environment:')
+        print()
+        print('diffenv --compare ' + r.text)
+        print()
+
+    else:
+        # Simply output current env
+        env = main.collect_env(facets, whitelist)
+        try:
+            main.yaml.dump(env, outfilestream)
+        except BrokenPipeError as e:
+            pass
+
+    if not args.output and not args.no_paging:
+        pager.stdin.close()
+        pager.wait()
+except KeyboardInterrupt as e:
+    if args.output or args.no_paging:
+        # we are not paging, so just exit on keyboard interrupt
+        sys.exit(0)
+    else:
+        # if paging let less handle this, -K will exit cleanly
         pass
