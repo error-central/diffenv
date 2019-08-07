@@ -38,10 +38,10 @@ parser.add_argument('--ignore-config',
                     help='ignore configs and run all facets')
 parser.add_argument('--no-color',
                     action='store_true',
-                    help="Don't color diff output")
+                    help="don't color diff output")
 parser.add_argument('--no-paging',
                     action='store_true',
-                    help="Don't use less for paging output")
+                    help="don't use less for paging output")
 
 args = parser.parse_args()
 if args.output or args.share:
@@ -129,9 +129,8 @@ try:
         env = main.collect_env(facets, whitelist)
         yaml_stream = StringIO()
         main.yaml.dump(env, yaml_stream)
-
+        # Open user's editor for proofreading before sending
         env_string = editor.raw_input_editor(default=yaml_stream.getvalue())
-
         upload_url = args.post
         sys.stderr.write("\033[K")
         sys.stderr.write("Uploading...\r")
