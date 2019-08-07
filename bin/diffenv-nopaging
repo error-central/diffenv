@@ -93,11 +93,12 @@ elif args.compare is not None:
     local_env = main.collect_env(facets, whitelist)
     compare_env = main.read_file_or_url(args.compare)
     try:
-        diffviewer.display_diff(local_env,
+        diff = diffviewer.diff(local_env,
                                 compare_env,
-                                outfilestream,
                                 not args.no_color)
+        outfilestream.writelines(diff)
     except BrokenPipeError as e:
+        # TODO (Gabe) : We should comment why we ignore this error.
         pass
 
 elif args.share:

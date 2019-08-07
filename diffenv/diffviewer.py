@@ -6,6 +6,9 @@ from ruamel.yaml import YAML
 from ruamel.yaml.scalarstring import LiteralScalarString
 from io import StringIO
 from copy import deepcopy
+import typing
+
+""" Display differences between two environments. """
 
 yaml = YAML()
 
@@ -16,7 +19,22 @@ A_MARKER_TXT = '<--'
 B_MARKER_TXT = '++>'
 
 
-def string_diff(fromlines, tolines):
+def diff(fromfile, tofile, do_color:bool):
+    """
+    Primary funciton. Display diff between two YAML files.
+    fromFile: YAML structrue
+    toFile: YAML structrue
+    doColor: Boolean indicating whether to colorize output
+    """
+    buf = StringIO()
+    yaml.dump(diff_nested(fromfile, tofile), buf)
+    difflines = buf.getvalue().splitlines(True)
+    if do_color:
+      difflines = colorize_diff(difflines)
+    return difflines
+
+
+def string_diff(fromlines: typing.List[str], tolines: typing.List[str]):
     diff = difflib.unified_diff(fromlines, tolines, n=8, lineterm='\n')
     for i, line in enumerate(diff):
         if i > 2:
@@ -28,16 +46,10 @@ def string_diff(fromlines, tolines):
                 yield line
 
 
-def display_diff(fromfile, tofile, outfilestream, do_color):
-    buf = StringIO()
-    yaml.dump(diff_nested(fromfile, tofile), buf)
-    difflines = buf.getvalue().splitlines(True)
-    if do_color:
-      difflines = color_diff(difflines)
-    outfilestream.writelines(difflines)
-
-
-def color_diff(diff):
+def colorize_diff(diff: typing.List[str]):
+    """
+    Add terminal colors to a diff
+    """
     marking = False
     col = 0
     for line in diff:
@@ -69,7 +81,10 @@ def color_diff(diff):
 
 
 def diff_nested(m1, m2):
-    """ Computes diff of two nested YAML structures. """
+    """
+    Computes diff of two nested YAML structures.
+    Note m1, m2 may also be strings
+    """
     if isinstance(m1, str) or type(m1) != type(m2):
         # We are comparing values (likely strings)directly
         result = CommentedMap([(A_MARKER, m1),
