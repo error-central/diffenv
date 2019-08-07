@@ -82,7 +82,7 @@ def colorize_diff(diff: typing.List[str]):
 
 def diff_nested(m1, m2):
     """
-    Computes diff of two nested YAML structures.
+    Recursively computes diff of two nested YAML structures.
     Note m1, m2 may also be strings
     """
     if isinstance(m1, str) or type(m1) != type(m2):
