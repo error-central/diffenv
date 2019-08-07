@@ -8,7 +8,7 @@ import requests
 from io import StringIO
 from signal import signal, SIGPIPE, SIG_DFL
 
-from diffenv import main, diffviewer
+from diffenv import main, diffviewer, editor
 
 # Handle arguments
 parser = argparse.ArgumentParser(
@@ -105,12 +105,15 @@ elif args.share:
     # --share : Get a shareable link
     sys.stderr.write("Collecting env...\r")
     env = main.collect_env(facets, whitelist)
-    buf = StringIO()
-    main.yaml.dump(env, buf)
+    yaml_stream = StringIO()
+    main.yaml.dump(env, yaml_stream)
+
+    env_string = editor.raw_input_editor(default=yaml_stream.getvalue())
+
     upload_url = args.post
     sys.stderr.write("\033[K")
     sys.stderr.write("Uploading...\r")
-    r = requests.post(upload_url, files={'env.yaml': buf.getvalue()})
+    r = requests.post(upload_url, files={'env.yaml': env_string})
     sys.stderr.write("\033[K")
     print('Run the following line on comparison environment:')
     print()
