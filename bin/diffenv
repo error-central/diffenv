@@ -52,8 +52,8 @@ if not sys.stdout.isatty():
     args.no_paging = True
 
 
-# Handle outputting to file, pager or stdout
 try:
+    # Handle outputting to file, pager or stdout
     if args.output:
         outfilestream = open(args.output, 'w')
     elif args.no_paging:
@@ -63,10 +63,9 @@ try:
         pager = subprocess.Popen(['less', '-F', '-R', '-S', '-X', '-K'],
                                  stdin=subprocess.PIPE,
                                  stdout=sys.stdout)
-
         outfilestream = pager.stdin
 
-    # handle situations where our output is piped to another program which then
+    # Handle situations where our output is piped to another program which then
     # unexpectedly hangs up
     signal(SIGPIPE, SIG_DFL)
 
@@ -155,8 +154,8 @@ try:
         pager.wait()
 except KeyboardInterrupt as e:
     if args.output or args.no_paging:
-        # we are not paging, so just exit on keyboard interrupt
+        # We are not paging, so just exit on keyboard interrupt
         sys.exit(0)
     else:
-        # if paging let less handle this, -K will exit cleanly
+        # If paging let less handle this, -K will exit cleanly
         pass
