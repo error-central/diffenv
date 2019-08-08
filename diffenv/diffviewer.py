@@ -31,7 +31,7 @@ def diff(fromfile, tofile, do_color: bool) -> typing.List[str]:
     yaml.dump(diff_nested(fromfile, tofile), buf)
     difflines = buf.getvalue().splitlines(True)
     if do_color:
-      difflines = colorize_diff(difflines)
+        difflines = colorize_diff(difflines)
     return difflines
 
 
@@ -151,4 +151,3 @@ def diff_nested(m1, m2):
         # Some other kind of type compared directly
         return CommentedMap([(A_MARKER, m1),
                              (B_MARKER, m2)])
-

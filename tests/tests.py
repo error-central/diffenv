@@ -7,8 +7,8 @@ import sys
 # To run:
 #     python3 -m unittest tests.py
 
-class TestStringMethods(unittest.TestCase):
 
+class TestStringMethods(unittest.TestCase):
 
     def test_non_git(self):
         """ Test running in a non-git repo """
@@ -16,17 +16,16 @@ class TestStringMethods(unittest.TestCase):
         # self.assertEqual('foo'.upper(), 'FOO')
         pass
 
-
     def test_plain(self):
         """ Test running with no params """
         # TODO
         # self.assertEqual('foo'.upper(), 'FOO')
         pass
 
-
     def test_sharing(self):
         """ Test sharing env """
-        process = subprocess.Popen(['diffenv','--share'], stdout=subprocess.PIPE)
+        process = subprocess.Popen(
+            ['diffenv', '--share'], stdout=subprocess.PIPE)
         out, err = process.communicate()
         if err:
             sys.stderr.write(err)
@@ -47,20 +46,17 @@ class TestStringMethods(unittest.TestCase):
         # Should show that env is identical
         self.assertEqual(result_lines, "{}\n")
 
-
     def test_compare_http(self):
         """ Test comparing with remote env """
         # TODO
         # self.assertEqual('foo'.upper(), 'FOO')
         pass
 
-
     def test_compare_file(self):
         """ Test comparing with a file """
         # TODO
         # self.assertEqual('foo'.upper(), 'FOO')
         pass
-
 
     def test_passed_config(self):
         """ Test with passing in a cofig file """

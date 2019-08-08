@@ -31,7 +31,8 @@ def run_facet(path):
         sys.stderr.write("ERROR: Facet is not executable: %s" % path)
         return "WARNING: Skipping non-executable facet: %s" % path
     try:
-        process = subprocess.Popen([path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        process = subprocess.Popen(
+            [path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = process.communicate()
         out_decoded = out.decode("utf-8").strip()
         if err:
@@ -115,7 +116,7 @@ def get_all_facets():
     return facet_map
 
 
-def load_config_file(path:str):
+def load_config_file(path: str):
     """
     Load a config file formatted in YAML
     """

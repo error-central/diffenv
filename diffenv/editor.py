@@ -2,7 +2,9 @@ import tempfile
 import subprocess
 import os
 
-# From: https://chase-seibert.github.io/blog/2012/10/31/python-fork-exec-vim-raw-input.html
+# From:
+# https://chase-seibert.github.io/blog/2012/10/31/python-fork-exec-vim-raw-input.html
+
 
 def raw_input_editor(default=None, editor=None):
     ''' like the built-in raw_input(), except that it uses a visual
