@@ -11,7 +11,9 @@ from ruamel.yaml.scalarstring import LiteralScalarString
 import pathlib
 import json
 import git
+import string
 
+printable = set(string.printable)
 yaml = YAML()
 
 # Get absolute path of current git repo, if we're in one.
@@ -159,7 +161,9 @@ def read_file_or_url(name: str):
             raise Exception(
                 name + ' yielded 404 status code. Your upload may have expired.')
         else:
-            return yaml.load(r.text)
+            # filter out weird characters
+            file_text = ''.join(filter(lambda x: x in printable, r.text))
+            return yaml.load(file_text)
     else:
         with open(name) as file:
             return yaml.load(file)
