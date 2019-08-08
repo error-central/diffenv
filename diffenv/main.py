@@ -13,7 +13,6 @@ import json
 import git
 import string
 
-printable = set(string.printable)
 yaml = YAML()
 
 # Get absolute path of current git repo, if we're in one.
@@ -162,8 +161,9 @@ def read_file_or_url(name: str):
             raise Exception(
                 name + ' yielded 404 status code. Your upload may have expired.')
         else:
-            # filter out weird characters
-            file_text = ''.join(filter(lambda x: x in printable, r.text))
+            # Filter out non-printable characters (They break the diff)
+            file_text = ''.join(
+                filter(lambda x: x in string.printable, r.text))
             return yaml.load(file_text)
     else:
         with open(name) as file:
