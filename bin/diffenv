@@ -147,6 +147,7 @@ try:
         sys.stderr.write("Uploading...\r")
         r = requests.post(upload_url, files={'env.yaml': env_string})
         sys.stderr.write("\033[K")
+        print("\033[K")
         print('Run the following line on comparison environment:')
         print()
         print('diffenv --compare ' + r.text)
