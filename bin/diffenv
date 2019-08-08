@@ -8,6 +8,7 @@ import requests
 from io import StringIO
 from signal import signal, SIGPIPE, SIG_DFL
 import subprocess
+import importlib_metadata
 
 from diffenv import main, diffviewer, editor
 
@@ -42,8 +43,16 @@ parser.add_argument('--no-color',
 parser.add_argument('--no-paging',
                     action='store_true',
                     help="don't use less for paging output")
+parser.add_argument('--version',
+                    action='store_true',
+                    help="display version and exit")
 
 args = parser.parse_args()
+
+if args.version:
+    print(importlib_metadata.version('diffenv'))
+    sys.exit(0)
+
 if args.output or args.share:
     args.no_color = True
 

@@ -22,7 +22,9 @@ setup(
         'colorama',
         'requests',
         'ruamel.yaml',
-        'gitpython'
+        'gitpython',
+        'psutil',
+        'importlib_metadata',
     ],
     zip_safe=False,
 

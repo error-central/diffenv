@@ -23,19 +23,18 @@ def md5(fname):
 
 
 def file_info(path):
+    filepath = str(path.absolute())
+    file_size_bytes = os.path.getsize(filepath)
+    file_mod_time = os.path.getmtime(filepath)
     if path.is_dir():
-        return collect_dir_info(path)
+        return ', '.join([str(file_size_bytes),
+                          str(file_mod_time), 'DIR'])
     else:
-        filepath = str(path.absolute())
-        file_size_bytes = os.path.getsize(filepath)
-        file_mod_time = os.path.getmtime(filepath)
-        file_hash = (
-            "-" *
-            32) if (
-            file_size_bytes > MAX_FILE_SIZE_HASH) else md5(filepath)
+        file_hash = ("-" * 32) if (
+          file_size_bytes > MAX_FILE_SIZE_HASH) else md5(filepath)
 
         return ', '.join(
-            [str(file_size_bytes), str(file_mod_time)[:16], file_hash])
+          [str(file_size_bytes), str(file_mod_time)[:16], file_hash])
 
 
 def collect_dir_info(path):
