@@ -10,14 +10,14 @@
       "name": "Python: diffenv",
       "type": "python",
       "request": "launch",
-      "program": "${workspaceFolder}/bin/diffenv-nopaging",
+      "program": "${workspaceFolder}/bin/diffenv",
       "console": "integratedTerminal"
     },
     {
       "name": "Python: diffenv in non-git dir",
       "type": "python",
       "request": "launch",
-      "program": "${workspaceFolder}/bin/diffenv-nopaging",
+      "program": "${workspaceFolder}/bin/diffenv",
       "console": "integratedTerminal",
       "cwd": "~/Downloads/nogit"
     },
@@ -26,7 +26,7 @@
       "type": "python",
       "request": "launch",
       "args": ["--config", "${workspaceFolder}/examples/config-small.yaml"],
-      "program": "${workspaceFolder}/bin/diffenv-nopaging",
+      "program": "${workspaceFolder}/bin/diffenv",
       "console": "integratedTerminal"
     },
     {
@@ -37,7 +37,17 @@
         "--compare",
         "https://transfer.sh/7PQpR/diff"
       ],
-      "program": "${workspaceFolder}/bin/diffenv-nopaging",
+      "program": "${workspaceFolder}/bin/diffenv",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Python: diffenv --share",
+      "type": "python",
+      "request": "launch",
+      "args": [
+        "--share"
+      ],
+      "program": "${workspaceFolder}/bin/diffenv",
       "console": "integratedTerminal"
     },
     {
