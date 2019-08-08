@@ -141,8 +141,19 @@ try:
         env = main.collect_env(facets, whitelist)
         yaml_stream = StringIO()
         main.yaml.dump(env, yaml_stream)
+        top_text = "# Below is your collected env. You can edit it before sharing.\n# When you are finished, save and exit your editor.\n\n"
         # Open user's editor for proofreading before sending
-        env_string = editor.raw_input_editor(default=yaml_stream.getvalue())
+        sys.stderr.write("Editing env in editor...\r")
+        env_string = editor.raw_input_editor(
+            default=top_text + yaml_stream.getvalue(),
+            prefix='diffenv-',
+            suffix='.yaml')
+        sys.stderr.write("\033[K")
+        env_string = env_string.replace(top_text, '')  # Remove instructions
+        if not env_string.strip():
+            # User deleted everything, ie cancelled.
+            print("Cancelled upload.")
+            exit(1)
         upload_url = args.post
         sys.stderr.write("\033[K")
         sys.stderr.write("Uploading...\r")

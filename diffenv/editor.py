@@ -6,11 +6,11 @@ import os
 # https://chase-seibert.github.io/blog/2012/10/31/python-fork-exec-vim-raw-input.html
 
 
-def raw_input_editor(default=None, editor=None):
+def raw_input_editor(default=None, editor=None, prefix=None, suffix=None):
     ''' like the built-in raw_input(), except that it uses a visual
     text editor for ease of editing. Unline raw_input() it can also
     take a default value. '''
-    with tempfile.NamedTemporaryFile(mode='r+') as tmpfile:
+    with tempfile.NamedTemporaryFile(mode='r+', prefix=prefix, suffix=suffix) as tmpfile:
         if default:
             tmpfile.write(default)
             tmpfile.flush()
