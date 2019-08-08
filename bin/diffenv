@@ -1,9 +1,161 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
 
-# suppress colors if we are not outputting to terminal
-if [ -t 1 ]
-then
-    diffenv-nopaging "$@" | less -FRX
-else
-    diffenv-nopaging --no-color "$@" | less -FRX
-fi
+import sys
+import argparse
+import os
+from shutil import copyfile, copystat
+import requests
+from io import StringIO
+from signal import signal, SIGPIPE, SIG_DFL
+import subprocess
+
+from diffenv import main, diffviewer, editor
+
+# Handle arguments
+parser = argparse.ArgumentParser(
+    description='Diff your total environment. Run without any params to simply output current environment state as YAML.',
+    epilog='More information and source code at https://github.com/error-central/diffenv')
+parser.add_argument('-o', '--output', help='output to file instead of stdout')
+parser.add_argument(
+    '-c',
+    '--compare',
+    help='file or URL to compare against the current env')
+parser.add_argument(
+    '--add-hooks',
+    action='store_true',
+    help='install git hooks in current repo and exit')
+parser.add_argument(
+    '--share',
+    action='store_true',
+    help='store current env and return URL that can be shared')
+parser.add_argument(
+    '--post',
+    default='https://transfer.sh',
+    help='POST env to specific URL when sharing; must be used with --share')
+parser.add_argument('--config', help='load config from specific file')
+parser.add_argument('--ignore-config',
+                    action='store_true',
+                    help='ignore configs and run all facets')
+parser.add_argument('--no-color',
+                    action='store_true',
+                    help="don't color diff output")
+parser.add_argument('--no-paging',
+                    action='store_true',
+                    help="don't use less for paging output")
+
+args = parser.parse_args()
+if args.output or args.share:
+    args.no_color = True
+
+if not sys.stdout.isatty():
+    # We're being piped or redirected, don't page
+    args.no_paging = True
+
+
+try:
+    # Handle outputting to file, pager or stdout
+    if args.output:
+        outfilestream = open(args.output, 'w')
+    elif args.no_paging:
+        outfilestream = sys.stdout
+    else:
+        # args stolen fron git source, see `man less`
+        pager = subprocess.Popen(['less', '-F', '-R', '-S', '-X', '-K'],
+                                 stdin=subprocess.PIPE,
+                                 stdout=sys.stdout)
+        outfilestream = pager.stdin
+
+    # Handle situations where our output is piped to another program which then
+    # unexpectedly hangs up
+    signal(SIGPIPE, SIG_DFL)
+
+    # Determine what config to use
+    default_config = {'facets': None}
+    if args.config:
+        # User specificed a config file
+        config = main.load_config_file(args.config)
+    elif args.ignore_config:
+        # User has elected to ignore config (use all facets)
+        config = default_config
+    else:
+        # Find config file in ./diffenv of git repo or user directory
+        try:
+            git_config = main.load_config_file(
+                os.path.join(main.git_toplevel, '.diffenv/config.yaml'))
+        except:
+            git_config = None
+        try:
+            user_config = main.load_config_file(
+                os.path.expanduser('~/.diffenv/config.yaml'))
+        except:
+            user_config = None
+        config = (git_config or user_config or default_config)
+    facets = main.get_all_facets()
+    whitelist = config['facets']
+
+
+    if args.add_hooks:
+        # --add-hooks : Install git hooks
+        if main.git_toplevel is None:
+            sys.stderr.write("ERROR: Not in a git repot, so cannot add git hooks.")
+            exit(1)
+
+        hooks_dst = os.path.join(main.git_toplevel, '.git', 'hooks', 'post-commit')
+        dirname = os.path.split(os.path.abspath(__file__))[0]
+        # Find hooks dir relative to this file
+        hooks_src = os.path.join(dirname, '..', 'hooks', 'post-commit')
+        # Copy the hook
+        copyfile(hooks_src, hooks_dst)
+        # Make executable
+        copystat(hooks_src, hooks_dst)
+        print("virtualenv: Installed git post-commit hook to %s" % hooks_dst)
+
+    elif args.compare is not None:
+        # --compare : compare with file or url
+        local_env = main.collect_env(facets, whitelist)
+        compare_env = main.read_file_or_url(args.compare)
+        try:
+            diff = diffviewer.diff(local_env,
+                                    compare_env,
+                                    not args.no_color)
+            outfilestream.writelines(diff)
+        except BrokenPipeError as e:
+            # TODO (Gabe) : We should comment why we ignore this error.
+            pass
+
+    elif args.share:
+        # --share : Get a shareable link
+        sys.stderr.write("Collecting env...\r")
+        env = main.collect_env(facets, whitelist)
+        yaml_stream = StringIO()
+        main.yaml.dump(env, yaml_stream)
+        # Open user's editor for proofreading before sending
+        env_string = editor.raw_input_editor(default=yaml_stream.getvalue())
+        upload_url = args.post
+        sys.stderr.write("\033[K")
+        sys.stderr.write("Uploading...\r")
+        r = requests.post(upload_url, files={'env.yaml': env_string})
+        sys.stderr.write("\033[K")
+        print('Run the following line on comparison environment:')
+        print()
+        print('diffenv --compare ' + r.text)
+        print()
+
+    else:
+        # Simply output current env
+        env = main.collect_env(facets, whitelist)
+        try:
+            main.yaml.dump(env, outfilestream)
+        except BrokenPipeError as e:
+            pass
+
+    if not args.output and not args.no_paging:
+        pager.stdin.close()
+        pager.wait()
+except KeyboardInterrupt as e:
+    if args.output or args.no_paging:
+        # We are not paging, so just exit on keyboard interrupt
+        sys.exit(0)
+    else:
+        # If paging let less handle this, -K will exit cleanly
+        pass
