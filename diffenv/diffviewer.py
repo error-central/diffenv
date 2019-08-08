@@ -19,12 +19,13 @@ A_MARKER_TXT = '<--'
 B_MARKER_TXT = '++>'
 
 
-def diff(fromfile, tofile, do_color:bool):
+def diff(fromfile, tofile, do_color: bool) -> typing.List[str]:
     """
     Primary funciton. Display diff between two YAML files.
-    fromfile: YAML structrue
-    tofile: YAML structrue
+    fromfile: ordereddict (YAML structrue)
+    tofile: ordereddict (YAML structrue)
     do_color: Boolean indicating whether to colorize output
+    returns: Array of lines
     """
     buf = StringIO()
     yaml.dump(diff_nested(fromfile, tofile), buf)

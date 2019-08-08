@@ -71,7 +71,9 @@ try:
         # args stolen fron git source, see `man less`
         pager = subprocess.Popen(['less', '-F', '-R', '-S', '-X', '-K'],
                                  stdin=subprocess.PIPE,
-                                 stdout=sys.stdout)
+                                 stdout=sys.stdout,
+                                 universal_newlines=True)
+        pager.encoding = "utf-8"
         outfilestream = pager.stdin
 
     # Handle situations where our output is piped to another program which then
