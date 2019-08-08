@@ -123,6 +123,7 @@ try:
 
     elif args.compare is not None:
         # --compare : compare with file or url
+        sys.stderr.write("Collecting env...\r")
         local_env = main.collect_env(facets, whitelist)
         compare_env = main.read_file_or_url(args.compare)
         try:
@@ -146,11 +147,14 @@ try:
         sys.stderr.write("\033[K")
         sys.stderr.write("Uploading...\r")
         r = requests.post(upload_url, files={'env.yaml': env_string})
+        share_url = r.text
         sys.stderr.write("\033[K")
         print("\033[K")
+        print('Your env was uploaded to: ' + share_url)
+        print()
         print('Run the following line on comparison environment:')
         print()
-        print('diffenv --compare ' + r.text)
+        print('diffenv --compare ' + share_url)
         print()
 
     else:
