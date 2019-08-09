@@ -51,34 +51,24 @@ def colorize_diff(diff: typing.List[str]):
     """
     Add terminal colors to a diff
     """
-    marking = False
+    marking = ''
     col = 0
     for line in diff:
-        if not marking and A_MARKER in line:
-            if B_MARKER in line:
-                # Handle single-line case (if applicable?)
-                i = line.index(B_MARKER)
-                yield Fore.GREEN + line[:i] + Fore.RESET + Fore.RED + line[i:] + Fore.RESET
-            else:
-                marking = True
-                yield Fore.GREEN + line
+        if A_MARKER in line or A_MARKER_TXT in line:
+            marking = Fore.GREEN
+        elif B_MARKER in line or B_MARKER_TXT in line:
+            marking = Fore.RED
+        elif len(line) - len(line.lstrip()) < col:
+            # in case of unindent reset marking color
+            marking = ''
 
-        elif marking and B_MARKER in line:
-            col = line.index(B_MARKER)
-            yield Fore.RESET + Fore.RED + line
-
-        elif marking and len(line) - len(line.lstrip()) < col:
-            # deindented
-            marking = False
-            yield Fore.RESET + line
-
-        elif not marking and A_MARKER_TXT in line:
-            yield Fore.GREEN + line + Fore.RESET
-        elif not marking and B_MARKER_TXT in line:
-            yield Fore.RED + line + Fore.RESET
-
-        else:
-            yield line
+        # keep track of leading whitespace to catch unindent
+        col = len(line) - len(line.lstrip())
+        line = marking + line + Fore.RESET
+        if A_MARKER_TXT in line or B_MARKER_TXT in line:
+            # reset because text lines are marked individually
+            marking = ''
+        yield line
 
 
 def diff_nested(m1, m2):
