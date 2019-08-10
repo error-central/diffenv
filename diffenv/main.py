@@ -78,7 +78,7 @@ def extract_facet_dir(dirpath, structure, depth=0):
     """
     p = pathlib.Path(dirpath)
     if p.exists():
-        for item in p.iterdir():
+        for item in sorted(p.iterdir()):
             if item.is_dir():
                 structure[item.name] = extract_facet_dir(
                     item,
@@ -134,7 +134,7 @@ def collect_env(facets, whitelist):
         # Actually run the facet and return the results
         return run_facet(facets)
     elif whitelist is None or isinstance(whitelist, str):
-        for subdir in sorted(list(facets.keys())):
+        for subdir in list(facets.keys()):
             facets[subdir] = collect_env(facets[subdir], whitelist)
         return facets
     else:
