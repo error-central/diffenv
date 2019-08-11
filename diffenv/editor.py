@@ -14,9 +14,12 @@ def raw_input_editor(default=None, editor=None, prefix=None, suffix=None):
         if default:
             tmpfile.write(default)
             tmpfile.flush()
-        subprocess.check_call([editor or get_editor(), tmpfile.name])
-        tmpfile.seek(0)
-        return tmpfile.read().strip()
+        try:
+            subprocess.check_call([editor or get_editor(), tmpfile.name])
+            tmpfile.seek(0)
+            return tmpfile.read().strip()
+        except FileNotFoundError:
+            return default
 
 
 def get_editor():
