@@ -10,6 +10,14 @@ assignees: ''
 **Environment**
 In the root directory of this repo, run `diffenv` and paste the results below, showing your environmennt. (Install with `pip install diffenv`.)
 
+<details><summary>Environment</summary>
+  
+```yaml
+Paste `diffenv` output here
+```
+
+</details>
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
