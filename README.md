@@ -5,6 +5,9 @@ Output and compare all facets of development environments.
 
 diffenv gathers and compares runtime environment metadata. A standard way of capturing a complete picture of a development environment.
 
+![output](https://user-images.githubusercontent.com/673455/62836101-182d1200-bc60-11e9-95c7-1f52dfb197b7.gif)
+
+
 ### Simplified example
 ```bash
 $ diffenv
