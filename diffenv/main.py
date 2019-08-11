@@ -65,7 +65,7 @@ def yaml_format_item(structure, key, depth):
     Attach bars and blank lines
     """
     structure.yaml_set_comment_before_after_key(
-        key, ('=' * (60 - depth * 2)), indent=depth * 2)
+        key, '\n', indent=depth * 2)
 
 
 def extract_facet_dir(dirpath, structure, depth=0):
