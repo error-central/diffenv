@@ -3,16 +3,16 @@ Output and compare all facets of development environments.
 
 ##  Overview
 
-diffenv gathers and compares runtime environment metadata, intended to remedy the common developer situation of "But it works on my machine! What's different about your environment?"
+diffenv gathers and compares runtime environment metadata. A standard way of capturing a complete picture of a development environment.
 
-Simplified example usage:
+### Simplified example
 ```bash
 $ diffenv
 python:
   python-version: Python 3.7.3
 shell:
   envvars:
-    EDITOR: sublw
+    EDITOR: sublw  
     GIT_EDITOR: subl -w
     API_ENDPOINT: http://api.lvh.me:4000
     PRISMA_ENDPOINT: http://prisma:4466
@@ -23,27 +23,17 @@ os:
 
 [Full example output](https://raw.githubusercontent.com/error-central/diffenv/master/examples/gabe_env.yaml).
 
+### Use cases
+* Add environment data to bug reports in a _standardized format_.
+* Diagnose what subtle difference is making things fail on your coworker's machine.
+* Compare your current environment against past recorded state when things still worked.
 
 ## Installation
 
-### Standard
-To install normally:
-
 ```bash
-pip3 install diffenv
+python3 -m pip install diffenv
 ```
-
-### Development
-
-If you are developing locally, do _not_ install as above, and instead run the following in the repo root directory:
-
-```bash
-# depending on your setup you may have to prefix sudo to this command
-pip install --editable .
-```
-
-Now `diffenv` will always point to your local repo, including any changes.
-
+Currently diffenv only supports Python 3. 
 
 ## Use
 
@@ -61,6 +51,12 @@ To share your environment with a coworker for comparison:
 ```bash
 diffenv --share
 ```
+
+For a complete list of command line options run:
+```bash
+diffenv --help
+```
+
 ## Customization
 
 diffenv can be customized for a user or for a repo.  Customizations are put in a directory named `.diffenv` in the user's home directory or the git repos top directory.
@@ -76,3 +72,18 @@ The facet file itself needs to be excutable (`chmod +x <yourfacet>`).
 You can limit which facets are run with a yaml file saved in `.diffenv/config.yaml`
 
 See `example_config.yaml` for more information.
+
+## Contributing to diffenv
+
+### Development install
+
+If you are developing locally, do _not_ install as above, and instead run the following in the repo root directory:
+
+```bash
+# depending on your setup you may have to prefix sudo to this command
+pip install --editable .
+```
+
+Now `diffenv` will always point to your local repo, including any changes.
+
+
