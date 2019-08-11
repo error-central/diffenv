@@ -79,6 +79,9 @@ def extract_facet_dir(dirpath, structure, depth=0):
     p = pathlib.Path(dirpath)
     if p.exists():
         for item in sorted(p.iterdir()):
+            if str(item).startswith('.'):
+                # Ignore hidden files
+                continue
             if item.is_dir():
                 structure[item.name] = extract_facet_dir(
                     item,
