@@ -27,7 +27,7 @@ os:
 [Full example output](https://raw.githubusercontent.com/error-central/diffenv/master/examples/gabe_env.yaml).
 
 ### Use cases
-* Add environment data to bug reports in a _standardized format_.
+* Add environment data to bug reports in a _standardized format_. [Example](https://github.com/error-central/diffenv/issues/29)
 * Diagnose what subtle difference is making things fail on your coworker's machine.
 * Compare your current environment against past recorded state when things still worked.
 
