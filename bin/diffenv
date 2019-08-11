@@ -79,6 +79,7 @@ try:
         except FileNotFoundError as e:
             # Presumably less is not installd
             outfilestream = sys.stdout
+            args.no_paging = True
 
     # Handle situations where our output is piped to another program which then
     # unexpectedly hangs up
