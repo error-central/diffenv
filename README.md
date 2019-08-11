@@ -21,7 +21,7 @@ os:
   version: Darwin 18.7.0 x86_64
 ```
 
-[Full example output](https://raw.githubusercontent.com/error-central/diffenv/master/examples/stan-diffenv.yaml).
+[Full example output](https://raw.githubusercontent.com/error-central/diffenv/master/examples/gabe_env.yaml).
 
 
 ## Installation
@@ -52,9 +52,9 @@ To output your current development environment to stderr:
 diffenv
 ```
 
-To compare your environment with @wanderingstan:
+To compare your environment with @werg:
 ```bash
-diffenv -c https://raw.githubusercontent.com/error-central/diffenv/master/examples/stan-diffenv.yaml
+diffenv -c https://raw.githubusercontent.com/error-central/diffenv/master/examples/gabe_env.yaml
 ```
 
 To share your environment with a coworker for comparison:

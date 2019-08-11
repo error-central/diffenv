@@ -1,0 +1,243 @@
+# ============================================================
+diffenv-version: 0.1.1
+# ============================================================
+directory:
+  # ==========================================================
+  listing:
+    tests: 16, 1565204570.8450534, DIR
+    setup.py: 702, 1565525741.15975, 752c6e59b0f7928af9769429eeca1562
+    package-lock.json: 114506, 1564653686.24037, 64f37e02b3664df0e4e2a678bb47f67a
+    one_file: 15536, 1564093095.70077, df022ea5044b656b6e331716cb2ceedd
+    node_modules: 5498, 1564653685.9953773, DIR
+    hooks: 22, 1564500687.6707716, DIR
+    foo.out: 17891, 1565108241.48152, 9b13a5af78f553f48f7a49a5424e12cd
+    fancy_config.scratch: 495, 1564653646.79637, 5f3d2337b65aac2dac3283d5d897811e
+    facets: 106, 1565270605.6594026, DIR
+    examples: 94, 1565526167.0057552, DIR
+    example_config.yaml: 45, 1564669916.36737, 759eab2b0f2d79bd2c0991820fa76787
+    dist: 192, 1564664507.1473775, DIR
+    diffenv.egg-info: 152, 1564668288.1023774, DIR
+    diffenv: 102, 1565420539.5817554, DIR
+    build: 64, 1564136267.3167715, DIR
+    bin: 14, 1565383417.4157553, DIR
+    another_file: 6731, 1564093115.72677, 7735e11dba9b18a36ccf637a7ab1a8bb
+    __pycache__: 50, 1564094049.7107716, DIR
+    README.md: 1912, 1564942876.19017, 5fd490e55ed5265b93ec5d47acc89acb
+    LICENSE: 1070, 1563972140.01077, bbd2cb1a41f404058e170e74a725bb18
+    .vscode: 48, 1565383417.4147553, DIR
+    .gitignore: 1221, 1564153052.76277, 3b1c12c1ca4e89f3c929c73c4427f846
+    .git: 204, 1565526169.1517553, DIR
+    .diffenv: 60, 1564907663.1230297, DIR
+  # ==========================================================
+  path: /home/turpentine/projects/diffenv
+# ============================================================
+git:
+  # ==========================================================
+  git-remote: |-
+    origin	git@github.com:error-central/diffenv.git (fetch)
+    origin	git@github.com:error-central/diffenv.git (push)
+  # ==========================================================
+  git-status: |-
+    On branch master
+    Your branch is up-to-date with 'origin/master'.
+    Untracked files:
+      (use "git add <file>..." to include in what will be committed)
+
+    	.diffenv/#config.yaml#
+    	another_file
+    	examples/gabe_env.yaml
+    	fancy_config.scratch
+    	foo.out
+    	node_modules/
+    	one_file
+    	package-lock.json
+
+    nothing added to commit but untracked files present (use "git add" to track)
+  # ==========================================================
+  git-user-email: wergomat@gmail.com
+  # ==========================================================
+  git-user-name: Gabriel Pickard
+  # ==========================================================
+  version: git version 2.11.0
+# ============================================================
+os:
+  # ==========================================================
+  timezone: 0200
+  # ==========================================================
+  version: Linux 4.19.34-04457-g5b63d4390e96 x86_64
+# ============================================================
+python:
+  # ==========================================================
+  pip-packages:
+    astroid: 1.4.9
+    autopep8: 1.4.4
+    backports.functools-lru-cache: 1.3
+    backports.shutil-get-terminal-size: 1.0.0
+    certifi: 2019.6.16
+    chardet: 3.0.4
+    colorama: 0.4.1
+    cryptography: 1.7.1
+    decorator: 4.0.11
+    enum34: 1.1.6
+    idna: 2.8
+    ipaddress: 1.0.17
+    ipython: 5.1.0
+    ipython-genutils: 0.1.0
+    isort: 4.2.5
+    jedi: 0.14.1
+    keyring: 10.1
+    keyrings.alt: 1.3
+    lazy-object-proxy: 1.2.2
+    meld: 3.16.4
+    parso: 0.5.1
+    pathlib2: 2.1.0
+    pep8: 1.7.0
+    pexpect: 4.2.1
+    pickleshare: 0.7.4
+    pip: 9.0.1
+    prompt-toolkit: 1.0.9
+    psutil: 5.6.3
+    ptyprocess: 0.5.1
+    pyasn1: 0.1.9
+    pycodestyle: 2.5.0
+    pycrypto: 2.6.1
+    pyflakes: 1.3.0
+    Pygments: 2.2.0
+    pygobject: 3.22.0
+    pylint: 1.6.5
+    pyxdg: 0.25
+    requests: 2.22.0
+    ruamel.ordereddict: 0.4.14
+    ruamel.yaml: 0.16.0
+    ruamel.yaml.clib: 0.1.0
+    SecretStorage: 2.3.1
+    setuptools: 33.1.1
+    simplegeneric: 0.8.1
+    six: 1.10.0
+    traitlets: 4.3.1
+    urllib3: 1.25.3
+    wcwidth: 0.1.7
+    wheel: 0.29.0
+    wrapt: 1.9.0
+    yapf: 0.28.0
+  # ==========================================================
+  pip3-packages:
+    astroid: 1.4.9
+    autopep8: 1.4.4
+    bleach: 3.1.0
+    certifi: 2019.6.16
+    chardet: 3.0.4
+    colorama: 0.4.1
+    cryptography: 1.7.1
+    decorator: 4.0.11
+    diffenv: 0.1.1
+    docutils: 0.15.1
+    entrypoints: 0.3
+    flake8: 3.7.8
+    gitdb2: 2.0.5
+    GitPython: 2.1.13
+    idna: 2.8
+    importlib-metadata: 0.19
+    ipython: 5.1.0
+    ipython-genutils: 0.1.0
+    isort: 4.2.5
+    jedi: 0.14.1
+    keyring: 10.1
+    keyrings.alt: 1.3
+    lazy-object-proxy: 1.2.2
+    mccabe: 0.6.1
+    parso: 0.5.1
+    pexpect: 4.2.1
+    pickleshare: 0.7.4
+    pip: 9.0.1
+    pkginfo: 1.5.0.1
+    prompt-toolkit: 1.0.9
+    psutil: 5.6.3
+    ptyprocess: 0.5.1
+    pyasn1: 0.1.9
+    pycodestyle: 2.5.0
+    pycrypto: 2.6.1
+    pycurl: 7.43.0
+    pyflakes: 2.1.1
+    Pygments: 2.4.2
+    pygobject: 3.22.0
+    pylint: 1.6.5
+    python-apt: 1.4.0b3
+    pyxdg: 0.25
+    readme-renderer: 24.0
+    requests: 2.22.0
+    requests-toolbelt: 0.9.1
+    ruamel.yaml: 0.16.0
+    ruamel.yaml.clib: 0.1.0
+    SecretStorage: 2.3.1
+    setuptools: 41.0.1
+    simplegeneric: 0.8.1
+    six: 1.12.0
+    smmap2: 2.0.5
+    termcolor: 1.1.0
+    tqdm: 4.32.2
+    traitlets: 4.3.1
+    twine: 1.13.0
+    unattended-upgrades: 0.1
+    urllib3: 1.25.3
+    wcwidth: 0.1.7
+    webencodings: 0.5.1
+    wheel: 0.33.4
+    wrapt: 1.9.0
+    yapf: 0.28.0
+    zipp: 0.5.2
+  # ==========================================================
+  python-version: Python 2.7.13
+  # ==========================================================
+  python3-version: Python 3.5.3
+  # ==========================================================
+  virtualenv: |
+  # ==========================================================
+  which-python: /usr/bin/python
+  # ==========================================================
+  which-python3: /usr/bin/python3
+# ============================================================
+shell:
+  # ==========================================================
+  envvars:
+    BROWSER: /usr/bin/garcon-url-handler
+    COLORTERM: truecolor
+    DBUS_SESSION_BUS_ADDRESS: unix:path=/run/user/1000/bus
+    DISPLAY: :0
+    DISPLAY_LOW_DENSITY: :1
+    HOME: /home/turpentine
+    INVOCATION_ID: a8dac9746d134d95afcf38290076dbd5
+    JOURNAL_STREAM: 9:6237
+    LANG: en_US.UTF-8
+    LOGNAME: turpentine
+    MANAGERPID: '116'
+    PATH: /usr/local/sbin:/usr/local/bin:/usr/local/games:/usr/sbin:/usr/bin:/usr/games:/sbin:/bin
+    PWD: /home/turpentine/projects/diffenv
+    QT_AUTO_SCREEN_SCALE_FACTOR: '1'
+    QT_QPA_PLATFORMTHEME: gtk2
+    SHELL: /bin/bash
+    SHLVL: '1'
+    SOMMELIER_VERSION: '0.20'
+    TERM: xterm-256color
+    TERMINATOR_DBUS_NAME: net.tenshu.Terminator20x20309d54defed5d4
+    TERMINATOR_DBUS_PATH: /net/tenshu/Terminator2
+    TERMINATOR_UUID: urn:uuid:983e4f1d-7c08-405e-ad39-70b3b591fa6c
+    USER: tixelbook
+    VTE_VERSION: '4601'
+    WAYLAND_DISPLAY: wayland-0
+    WAYLAND_DISPLAY_LOW_DENSITY: wayland-1
+    XCURSOR_SIZE: '48'
+    XCURSOR_SIZE_LOW_DENSITY: '24'
+    XCURSOR_THEME: Adwaita
+    XDG_CONFIG_HOME: /home/turpentine/.config
+    XDG_DATA_DIRS: /home/turpentine/.local/share:/home/turpentine/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+    XDG_RUNTIME_DIR: /run/user/1000
+    _: /usr/local/bin/diffenv
+  # ==========================================================
+  shell-version: |-
+    GNU bash, version 4.4.12(1)-release (x86_64-pc-linux-gnu)
+    Copyright (C) 2016 Free Software Foundation, Inc.
+    License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+
+    This is free software; you are free to change and redistribute it.
+    There is NO WARRANTY, to the extent permitted by law.
