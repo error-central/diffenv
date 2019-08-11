@@ -68,13 +68,17 @@ try:
     elif args.no_paging:
         outfilestream = sys.stdout
     else:
-        # args stolen fron git source, see `man less`
-        pager = subprocess.Popen(['less', '-F', '-R', '-S', '-X', '-K'],
-                                 stdin=subprocess.PIPE,
-                                 stdout=sys.stdout,
-                                 universal_newlines=True)
-        pager.encoding = "utf-8"
-        outfilestream = pager.stdin
+        try:
+            # args stolen fron git source, see `man less`
+            pager = subprocess.Popen(['less', '-F', '-R', '-S', '-X', '-K'],
+                                     stdin=subprocess.PIPE,
+                                     stdout=sys.stdout,
+                                     universal_newlines=True)
+            pager.encoding = "utf-8"
+            outfilestream = pager.stdin
+        except FileNotFoundError as e:
+            # Presumably less is not installd
+            outfilestream = sys.stdout
 
     # Handle situations where our output is piped to another program which then
     # unexpectedly hangs up
