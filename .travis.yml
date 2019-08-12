@@ -8,7 +8,7 @@ matrix:
       os: osx
       osx_image: xcode10.2  # Python 3.7.2 running on macOS 10.14.3
       language: shell       # 'language: python' is an error on Travis CI macOS
-install: pip3 install --upgrade pip  # all three OSes agree about 'pip3'
+install: pip3 install --editable .  # all three OSes agree about 'pip3'
 # 'python' points to Python 2.7 on macOS but points to Python 3.7 on Linux and Windows
 # 'python3' is a 'command not found' error on Windows but 'py' works on Windows only
 script: python3 -m unittest tests/tests.py || python -m unittest tests/tests.py

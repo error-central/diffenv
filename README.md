@@ -15,7 +15,7 @@ python:
   python-version: Python 3.7.3
 shell:
   envvars:
-    EDITOR: sublw  
+    EDITOR: sublw
     GIT_EDITOR: subl -w
     API_ENDPOINT: http://api.lvh.me:4000
     PRISMA_ENDPOINT: http://prisma:4466
@@ -36,7 +36,7 @@ os:
 ```bash
 python3 -m pip install diffenv
 ```
-Currently diffenv only supports Python 3. 
+Currently diffenv only supports Python 3.
 
 ## Use
 
@@ -84,7 +84,7 @@ If you are developing locally, do _not_ install as above, and instead run the fo
 
 ```bash
 # depending on your setup you may have to prefix sudo to this command
-pip install --editable .
+pip3 install --editable .
 ```
 
 Now `diffenv` will always point to your local repo, including any changes.
