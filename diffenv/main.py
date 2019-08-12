@@ -112,7 +112,7 @@ def get_all_facets():
 
     # Default facets
     default_facet_dir = join(os.path.split(
-        os.path.abspath(__file__))[0], '..', 'facets')  # dir in our package
+        os.path.abspath(__file__))[0], 'facets')  # dir in our package
     facet_map = extract_facet_dir(default_facet_dir, facet_map)
 
     return facet_map
