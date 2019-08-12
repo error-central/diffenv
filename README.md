@@ -5,6 +5,9 @@ Output and compare all facets of development environments.
 
 diffenv gathers and compares runtime environment metadata. A standard way of capturing a complete picture of a development environment.
 
+![output](https://user-images.githubusercontent.com/673455/62836101-182d1200-bc60-11e9-95c7-1f52dfb197b7.gif)
+
+
 ### Simplified example
 ```bash
 $ diffenv
@@ -24,7 +27,7 @@ os:
 [Full example output](https://raw.githubusercontent.com/error-central/diffenv/master/examples/gabe_env.yaml).
 
 ### Use cases
-* Add environment data to bug reports in a _standardized format_.
+* Add environment data to bug reports in a _standardized format_. [Example](https://github.com/error-central/diffenv/issues/29)
 * Diagnose what subtle difference is making things fail on your coworker's machine.
 * Compare your current environment against past recorded state when things still worked.
 
