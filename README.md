@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/error-central/diffenv.svg?branch=master)](https://travis-ci.com/error-central/diffenv)
+
 # diffenv
 Output and compare all facets of development environments.
 
