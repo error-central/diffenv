@@ -30,10 +30,10 @@ class TestStringMethods(unittest.TestCase):
         if err:
             sys.stderr.write(err)
         result_lines = (out.decode("utf-8")).split("\n")
-        # Get the url
 
-        # Should be e.g. diffenv --compare https://transfer.sh/15xMWL/diff
-        diff_command = result_lines[2]
+        # Get the url
+        # 5th line Should be e.g. `diffenv --compare https://transfer.sh/15xMWL/diff`
+        diff_command = result_lines[5]
         self.assertEqual(diff_command[:26], "diffenv --compare https://")
 
         process = subprocess.Popen(
