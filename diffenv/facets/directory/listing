@@ -40,7 +40,8 @@ def file_info(path):
 def collect_dir_info(path):
     return CommentedMap([(p.name or '.', file_info(p))
                          for p in sorted(list(path.iterdir()),
-                                         reverse=True)])
+                                         reverse=True)
+                         if p.name != '.git'])
 
 
 yaml.dump(collect_dir_info(pathlib.Path('.')),
