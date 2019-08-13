@@ -51,6 +51,16 @@
       "console": "integratedTerminal"
     },
     {
+      "name": "Python: diffenv --issue",
+      "type": "python",
+      "request": "launch",
+      "args": [
+        "--issue"
+      ],
+      "program": "${workspaceFolder}/bin/diffenv",
+      "console": "integratedTerminal"
+    },
+    {
       "name": "Python: Current File",
       "type": "python",
       "request": "launch",
