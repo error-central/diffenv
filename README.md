@@ -89,4 +89,9 @@ pip3 install --editable .
 
 Now `diffenv` will always point to your local repo, including any changes.
 
+### Testing
+
+```
+python3 -m unittest tests/tests.py
+```
 
