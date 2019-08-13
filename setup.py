@@ -8,13 +8,14 @@ def readme():
 
 setup(
     name='diffenv',
-    version='0.2.0',
+    version='0.2.4',
     author='Stan James, Gabriel Pickard',
     author_email='wanderingstan@gmail.com, wergomat@gmail.com',
     url='http://github.com/error-central/diffenv',
     description='Compare development environments',
     long_description=readme(),
     long_description_content_type='text/markdown',
+    include_package_data=True,
     scripts=['bin/diffenv'],
     license='MIT',
     packages=['diffenv'],
