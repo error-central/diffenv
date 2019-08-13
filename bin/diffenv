@@ -125,7 +125,7 @@ try:
         hooks_dst = os.path.join(main.git_toplevel, '.git', 'hooks', 'post-commit')
         dirname = os.path.split(os.path.abspath(__file__))[0]
         # Find hooks dir relative to this file
-        hooks_src = os.path.join(dirname, '..', 'hooks', 'post-commit')
+        hooks_src = os.path.join(dirname, 'hooks', 'post-commit')
         # Copy the hook
         copyfile(hooks_src, hooks_dst)
         # Make executable
@@ -143,7 +143,7 @@ try:
                                     not args.no_color)
             outfilestream.writelines(diff)
         except BrokenPipeError as e:
-            # TODO (Gabe) : We should comment why we ignore this error.
+            # Ignore if less hangs up
             pass
 
     elif args.share:

@@ -1,1 +1,2 @@
 recursive-include diffenv/facets *
+recursive-include diffenv/hooks *
