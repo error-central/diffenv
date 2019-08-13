@@ -64,7 +64,10 @@ def colorize_diff(diff: typing.List[str]):
 
         # keep track of leading whitespace to catch unindent
         col = len(line) - len(line.lstrip())
-        line = marking + line + Fore.RESET
+        reset = ''
+        if marking:
+            reset = Fore.RESET
+        line = marking + line + reset
         if A_MARKER_TXT in line or B_MARKER_TXT in line:
             # reset because text lines are marked individually
             marking = ''
