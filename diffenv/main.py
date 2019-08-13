@@ -171,3 +171,8 @@ def read_file_or_url(name: str):
     else:
         with open(name) as file:
             return yaml.load(file)
+
+
+def get_main_dir():
+    """ Get path to this dir """
+    return os.path.split(os.path.abspath(__file__))[0]
