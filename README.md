@@ -174,3 +174,12 @@ docker run -it python bash
 python3 -m unittest tests/tests.py
 ```
 
+### Creating a release
+
+First edit `setup.py` and bump the version, then:
+
+```bash
+python3 setup.py sdist
+# modify the below to match the file of the version you just created
+twine upload dist/diffenv-
+```
