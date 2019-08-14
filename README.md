@@ -50,16 +50,6 @@ python:
   which-python:
 -    <<-: /usr/local/opt/python/libexec/bin/python
 +    +>>: /usr/bin/python
-  shell-version:
--    <<-: GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin18) Copyright (C)
--      2007 Free Software Foundation, Inc.
-+    +>>: |-
-+      GNU bash, version 4.4.12(1)-release (x86_64-pc-linux-gnu)
-+      Copyright (C) 2016 Free Software Foundation, Inc.
-+      License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
-+
-+      This is free software; you are free to change and redistribute it.
-+      There is NO WARRANTY, to the extent permitted by law.
 ```
 
 
@@ -154,6 +144,14 @@ pip3 install --editable .
 ```
 
 Now `diffenv` will always point to your local repo, including any changes.
+
+
+For testing on docker containers:
+```
+docker pull python
+docker run -it python bash
+# Now e.g. `pip install diffenv`
+```
 
 ### Testing
 
