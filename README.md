@@ -92,6 +92,10 @@ python:
 +    +>>: Python 3.7.3
 ```
 
+Note this requires the git commit hooks to have been installed, so that diffenv is run on each commit.
+```
+#$ diffenv --add-hooks
+```
 
 
 ## Installation
