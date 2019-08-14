@@ -1,11 +1,10 @@
 [![Build Status](https://travis-ci.com/error-central/diffenv.svg?branch=master)](https://travis-ci.com/error-central/diffenv)
 
 # diffenv
-Output and compare all facets of development environments.
 
 ##  Overview
 
-diffenv gathers and compares runtime environment metadata. A standard way of capturing a complete picture of a development environment.
+diffenv gathers and compares runtime environments. It defines a simple standard for stoting a complete picture of a development environment.
 
 ![output](https://user-images.githubusercontent.com/673455/62836101-182d1200-bc60-11e9-95c7-1f52dfb197b7.gif)
 
@@ -29,9 +28,38 @@ os:
 [Full example output](https://raw.githubusercontent.com/error-central/diffenv/master/examples/gabe_env.yaml).
 
 ### Use cases
-* Add environment data to bug reports in a _standardized format_. [Example](https://github.com/error-central/diffenv/issues/29)
-* Diagnose what subtle difference is making things fail on your coworker's machine.
-* Compare your current environment against past recorded state when things still worked.
+* Add environment data to bug reports, even automatically. [Example](https://github.com/error-central/diffenv/issues/29)
+* Diagnose what subtle difference in environment is making things fail on your coworker's machine.
+* Compare your current environment against past commits when things worked.
+
+## Options
+
+```bash
+usage: diffenv [-h] [-o OUTPUT] [-c COMPARE] [--add-hooks] [--share] [--issue]
+               [--post POST] [--config CONFIG] [--ignore-config] [--no-color]
+               [--no-paging] [--version]
+
+Diff your total environment. Run without any params to simply output current
+environment state as YAML.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -o OUTPUT, --output OUTPUT
+                        output to file instead of stdout
+  -c COMPARE, --compare COMPARE
+                        file or URL to compare against the current env
+  --add-hooks           install git hooks in current repo and exit
+  --share               store current env and return URL that can be shared
+  --issue               create github issue
+  --post POST           POST env to specific URL when sharing; must be used
+                        with --share
+  --config CONFIG       load config from specific file
+  --ignore-config       ignore configs and run all facets
+  --no-color            don't color diff output
+  --no-paging           don't use less for paging output
+  --version             display version and exit
+
+```
 
 ## Installation
 
