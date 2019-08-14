@@ -67,11 +67,31 @@ python:
 # ...trimmed 
 ```
 
+### Include environment in submitted issues
 
-### Use cases
-* Add environment data to bug reports, even automatically. [Example](https://github.com/error-central/diffenv/issues/29)
-* Diagnose what subtle difference in environment is making things fail on your coworker's machine.
-* Compare your current environment against past commits when things worked.
+```bash
+#$ diffenv --issue
+
+# Browser will open with new issue
+```
+
+<img width="407" alt="Screen Shot 2019-08-14 at 6 43 06 PM" src="https://user-images.githubusercontent.com/673455/63039406-7f96cc00-bec3-11e9-88e8-cb49bc931140.png">
+
+
+### Compare with past commits
+
+```diff
+#$ diffenv --compare .diffenv/commits/2b19c9e47af0828c8775ee231768631e0b06ae0f.diffenv
+git:
+  version:
+-    <<-: git version 2.11.0
++    +>>: git version 2.22.0
+python:
+  python-version:
+-    <<-: Python 3.7
++    +>>: Python 3.7.3
+```
+
 
 ## Options
 
