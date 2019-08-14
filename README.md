@@ -93,34 +93,6 @@ python:
 ```
 
 
-## Options
-
-```
-usage: diffenv [-h] [-o OUTPUT] [-c COMPARE] [--add-hooks] [--share] [--issue]
-               [--post POST] [--config CONFIG] [--ignore-config] [--no-color]
-               [--no-paging] [--version]
-
-Diff your total environment. Run without any params to simply output current
-environment state as YAML.
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -o OUTPUT, --output OUTPUT
-                        output to file instead of stdout
-  -c COMPARE, --compare COMPARE
-                        file or URL to compare against the current env
-  --add-hooks           install git hooks in current repo and exit
-  --share               store current env and return URL that can be shared
-  --issue               create github issue
-  --post POST           POST env to specific URL when sharing; must be used
-                        with --share
-  --config CONFIG       load config from specific file
-  --ignore-config       ignore configs and run all facets
-  --no-color            don't color diff output
-  --no-paging           don't use less for paging output
-  --version             display version and exit
-
-```
 
 ## Installation
 
@@ -148,7 +120,31 @@ diffenv --share
 
 For a complete list of command line options run:
 ```bash
-diffenv --help
+$ diffenv --help
+
+usage: diffenv [-h] [-o OUTPUT] [-c COMPARE] [--add-hooks] [--share] [--issue]
+               [--post POST] [--config CONFIG] [--ignore-config] [--no-color]
+               [--no-paging] [--version]
+
+Diff your total environment. Run without any params to simply output current
+environment state as YAML.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -o OUTPUT, --output OUTPUT
+                        output to file instead of stdout
+  -c COMPARE, --compare COMPARE
+                        file or URL to compare against the current env
+  --add-hooks           install git hooks in current repo and exit
+  --share               store current env and return URL that can be shared
+  --issue               create github issue
+  --post POST           POST env to specific URL when sharing; must be used
+                        with --share
+  --config CONFIG       load config from specific file
+  --ignore-config       ignore configs and run all facets
+  --no-color            don't color diff output
+  --no-paging           don't use less for paging output
+  --version             display version and exit
 ```
 
 ## Customization
