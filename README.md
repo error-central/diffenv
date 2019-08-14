@@ -60,7 +60,7 @@ python:
 
 ## Options
 
-```bash
+```
 usage: diffenv [-h] [-o OUTPUT] [-c COMPARE] [--add-hooks] [--share] [--issue]
                [--post POST] [--config CONFIG] [--ignore-config] [--no-color]
                [--no-paging] [--version]
@@ -147,7 +147,7 @@ Now `diffenv` will always point to your local repo, including any changes.
 
 
 For testing on docker containers:
-```
+```bash
 docker pull python
 docker run -it python bash
 # Now e.g. `pip install diffenv`
@@ -155,7 +155,7 @@ docker run -it python bash
 
 ### Testing
 
-```
+```bash
 python3 -m unittest tests/tests.py
 ```
 
