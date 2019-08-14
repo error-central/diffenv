@@ -9,7 +9,7 @@ diffenv gathers and compares runtime environments. It defines a simple standard 
 ![output](https://user-images.githubusercontent.com/673455/62836101-182d1200-bc60-11e9-95c7-1f52dfb197b7.gif)
 
 
-### Save your current environment
+### Output your current environment
 ```yaml
 #$ diffenv
 python:
