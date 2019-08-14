@@ -24,8 +24,44 @@ os:
   timezone: 0200
   version: Darwin 18.7.0 x86_64
 ```
-
 [Full example output](https://raw.githubusercontent.com/error-central/diffenv/master/examples/gabe_env.yaml).
+
+
+### Simplified diff
+```diff
+git:
+  git-user-name:
+-    <<-: Stan James
++    +>>: Gabriel Pickard
+  version:
+-    <<-: git version 2.22.0
++    +>>: git version 2.11.0
+os:
+  version:
+-    <<-: Darwin 18.7.0 x86_64
++    +>>: Linux 4.19.34-04457-g5b63d4390e96 x86_64
+python:
+  python-version:
+-    <<-: Python 3.7.3
++    +>>: Python 2.7.13
+  python3-version:
+-    <<-: Python 3.7.3
++    +>>: Python 3.5.3
+  which-python:
+-    <<-: /usr/local/opt/python/libexec/bin/python
++    +>>: /usr/bin/python
+  shell-version:
+-    <<-: GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin18) Copyright (C)
+-      2007 Free Software Foundation, Inc.
++    +>>: |-
++      GNU bash, version 4.4.12(1)-release (x86_64-pc-linux-gnu)
++      Copyright (C) 2016 Free Software Foundation, Inc.
++      License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
++
++      This is free software; you are free to change and redistribute it.
++      There is NO WARRANTY, to the extent permitted by law.
+```
+
 
 ### Use cases
 * Add environment data to bug reports, even automatically. [Example](https://github.com/error-central/diffenv/issues/29)
