@@ -11,7 +11,7 @@ diffenv gathers and compares runtime environments. It defines a simple standard 
 
 ### Simplified example
 ```yaml
-$ diffenv
+#$ diffenv
 python:
   python-version: Python 3.7.3
 shell:
@@ -29,6 +29,7 @@ os:
 
 ### Simplified diff
 ```diff
+#$ diffenv --compare https://transfer.sh/P1gQZ/env.yaml
 git:
   git-user-name:
 -    <<-: Stan James
