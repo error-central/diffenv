@@ -9,7 +9,7 @@ diffenv gathers and compares runtime environments. It defines a simple standard 
 ![output](https://user-images.githubusercontent.com/673455/62836101-182d1200-bc60-11e9-95c7-1f52dfb197b7.gif)
 
 
-### Simplified example
+### Save your current environment
 ```yaml
 #$ diffenv
 python:
@@ -23,11 +23,23 @@ shell:
 os:
   timezone: 0200
   version: Darwin 18.7.0 x86_64
+
+# ...trimmed 
 ```
-[Full example output](https://raw.githubusercontent.com/error-central/diffenv/master/examples/gabe_env.yaml).
+(Simplified example. See [full example](https://raw.githubusercontent.com/error-central/diffenv/master/examples/gabe_env.yaml) here)
 
+### Share your environment with co-worker
+```
+#$ diffenv --share
 
-### Simplified diff
+Your env was uploaded to: https://transfer.sh/P1gQZ/env.yaml
+
+Run the following line on comparison environment:
+
+diffenv --compare https://transfer.sh/P1gQZ/env.yaml
+```
+
+### Diff your environment with co-worker
 ```diff
 #$ diffenv --compare https://transfer.sh/P1gQZ/env.yaml
 git:
@@ -51,6 +63,8 @@ python:
   which-python:
 -    <<-: /usr/local/opt/python/libexec/bin/python
 +    +>>: /usr/bin/python
+
+# ...trimmed 
 ```
 
 
@@ -158,15 +172,5 @@ docker run -it python bash
 
 ```bash
 python3 -m unittest tests/tests.py
-```
-
-### Cutting a release
-
-First edit `setup.py` and bump the version, then:
-
-```bash
-python3 setup.py sdist
-# modify the below to match the file of the version you just created
-twine upload dist/diffenv-
 ```
 
