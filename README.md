@@ -10,7 +10,7 @@ diffenv gathers and compares runtime environments. It defines a simple standard 
 
 
 ### Simplified example
-```bash
+```yaml
 $ diffenv
 python:
   python-version: Python 3.7.3
