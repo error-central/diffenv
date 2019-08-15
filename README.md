@@ -174,6 +174,9 @@ See `example_config.yaml` for more information.
 If you are developing locally, do _not_ install as above, and instead run the following in the repo root directory:
 
 ```bash
+# Remove global installation of diffenv, if present
+pip3 uninstall diffenv
+
 # depending on your setup you may have to prefix sudo to this command
 pip3 install --editable .
 ```
