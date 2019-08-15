@@ -181,17 +181,17 @@ pip3 install --editable .
 Now `diffenv` will always point to your local repo, including any changes.
 
 
+### Testing
+
+```bash
+python3 -m unittest tests/tests.py
+```
+
 For testing on docker containers:
 ```bash
 docker pull python
 docker run -it python bash
 # Now e.g. `pip install diffenv`
-```
-
-### Testing
-
-```bash
-python3 -m unittest tests/tests.py
 ```
 
 ### Creating a release
