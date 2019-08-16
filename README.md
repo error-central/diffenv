@@ -24,7 +24,7 @@ os:
   timezone: 0200
   version: Darwin 18.7.0 x86_64
 
-# ...trimmed 
+# ...trimmed
 ```
 (Simplified example. See [full example](https://raw.githubusercontent.com/error-central/diffenv/master/examples/gabe_env.yaml) here)
 
@@ -64,7 +64,7 @@ python:
 -    <<-: /usr/local/opt/python/libexec/bin/python
 +    +>>: /usr/bin/python
 
-# ...trimmed 
+# ...trimmed
 ```
 
 ### Include environment in submitted issues
@@ -149,6 +149,8 @@ optional arguments:
   --no-color            don't color diff output
   --no-paging           don't use less for paging output
   --version             display version and exit
+
+More information and source code at https://github.com/error-central/diffenv
 ```
 
 ## Customization
