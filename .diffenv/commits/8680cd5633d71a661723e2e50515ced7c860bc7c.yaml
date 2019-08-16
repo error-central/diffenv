@@ -1,0 +1,278 @@
+
+diffenv-version: 0.2.0
+
+directory:
+
+  listing:
+    tests: 160, 1565970697.628735, DIR
+    setup.py: 733, 1565938699.60907, 45a6e791baed384f3973926ab47d7a97
+    facets: 96, 1565678335.6676767, DIR
+    examples: 160, 1565526937.9334917, DIR
+    example_config.yaml: 45, 1564670036.66021, 759eab2b0f2d79bd2c0991820fa76787
+    env.yaml: 9557, 1565529046.05771, 10189a68cae562b4b15176c628584ea1
+    dist: 128, 1565525687.4886672, DIR
+    diffenv.egg-info: 256, 1565525994.236996, DIR
+    diffenv: 288, 1565938699.608119, DIR
+    build: 160, 1565525325.6887057, DIR
+    bin: 96, 1565800452.866075, DIR
+    __pycache__: 96, 1564129273.2804494, DIR
+    README.md: 5488, 1565971150.27754, 910a046ad20caf962e9e1ef33b7a9bdb
+    MANIFEST.in: 68, 1565686663.53471, edff356a00ba1b5f0660d5514ebb5fb5
+    LICENSE: 1070, 1563971721.10152, bbd2cb1a41f404058e170e74a725bb18
+    .vscode: 128, 1565036334.5557442, DIR
+    .travis.yml: 814, 1565623659.24969, d7278269a9794d1260164b15942c0c60
+    .gitignore: 1223, 1565982079.42292, 586f18414fb67b907192a20951a623bf
+    .github: 96, 1565526937.9326942, DIR
+    .diffenv: 192, 1565528757.891121, DIR
+    .DS_Store: 6148, 1564760143.68363, df20c99511081bcbf44de38d832fbe70
+
+  path: /Users/stan/code/diffenv
+
+git:
+
+  git-remote: |-
+    origin	git@github.com:error-central/diffenv.git (fetch)
+    origin	git@github.com:error-central/diffenv.git (push)
+
+  git-status: |-
+    On branch master
+    Your branch is ahead of 'origin/master' by 3 commits.
+      (use "git push" to publish your local commits)
+
+    Changes not staged for commit:
+      (use "git add <file>..." to update what will be committed)
+      (use "git checkout -- <file>..." to discard changes in working directory)
+
+    	modified:   .gitignore
+    	modified:   bin/diffenv
+    	modified:   examples/config-small.yaml
+
+    Untracked files:
+      (use "git add <file>..." to include in what will be committed)
+
+    	.diffenv/commits/0114ace505a8bc771aa1cce28d14684cf09727f7.diffenv
+    	.diffenv/commits/041ddf8c60ac4b1824e409c518144d7f53d7b31b.diffenv
+    	.diffenv/commits/04d619f2c1bf08056f6fd42fe8871c40690e7f8c.diffenv
+    	.diffenv/commits/0a28bced7bccb4ec0faecc3804b7370f70f269e6.diffenv
+    	.diffenv/commits/0e8c9f514502022400c1639663f766410f42607c.diffenv
+    	.diffenv/commits/0fd969ed6fcf06d3883f9ad60d2eaab6bfed7a5e.diffenv
+    	.diffenv/commits/1489cf37ba66c8f06a7617774aaa305f88bd06c1.diffenv
+    	.diffenv/commits/14d449afcf18231cf8ec89ca4a88b80f479a44ae.diffenv
+    	.diffenv/commits/151de1b539a7c510674867328a7ae6e198868ae3.diffenv
+    	.diffenv/commits/159679a896cd243db9af76f77a641355c6bb34c1.diffenv
+    	.diffenv/commits/166125101351854e4fa91634d782f541dbf01912.diffenv
+    	.diffenv/commits/16a5e0cdb7cf94f50ec3775d4a6b1c66f276168a.diffenv
+    	.diffenv/commits/1c7960ea43bd1ec0336f3c39144ca1e684effd1f.diffenv
+    	.diffenv/commits/1cd8c9a0c4e9e1c1053eacbd79ba65ae9154728a.diffenv
+    	.diffenv/commits/1dde852d8c390ece28ec071f9e202b21d9f51422.diffenv
+    	.diffenv/commits/1f476db032ae52765ef29d8ab8b1221880a65850.diffenv
+    	.diffenv/commits/2716c34fb6844bd82daeca4588842123001b56f8.diffenv
+    	.diffenv/commits/2b19c9e47af0828c8775ee231768631e0b06ae0f.diffenv
+    	.diffenv/commits/33f2a758521d845ee32490303072bdff01212aff.diffenv
+    	.diffenv/commits/3899802aa368ac7879fc1657e6f882cf85bd5a16.diffenv
+    	.diffenv/commits/3a2b3f48be0c0d6c761efaba7e1537730d0fa620.diffenv
+    	.diffenv/commits/3ae488133e2677ab1ad39ac6841400b262895811.diffenv
+    	.diffenv/commits/3e726982039a267d8df7aed0fafc4ebe49cad343.diffenv
+    	.diffenv/commits/4112feb71b16ac140de88e53e1f759508528b739.diffenv
+    	.diffenv/commits/42956d8a4c66be3b60d9e372056d5548fc340af3.diffenv
+    	.diffenv/commits/44611545ca5b65809dc5c55943e5a6d76b14b139.diffenv
+    	.diffenv/commits/48c7661120c648f5e6f3ed317409182c176a9034.diffenv
+    	.diffenv/commits/4a34c3b14e315ce94c43660fbad9ad28e3977891.diffenv
+    	.diffenv/commits/4d8850885fedc91f08f49c8101549d29d6f47e7d.diffenv
+    	.diffenv/commits/4f7f4614d53a203d4c3433eed0500aecb27868d4.diffenv
+    	.diffenv/commits/5a1c1a5c04ffd74094041b1d91ce2e9fcd7232e9.diffenv
+    	.diffenv/commits/5b422f62200e08f3dc09a7e0b00a20dd5d41c6c0.diffenv
+    	.diffenv/commits/612142ef90cc8f3f4f05a86608a62f3a36969372.diffenv
+    	.diffenv/commits/630df76abab4257f51502ae4cb3cbc1f44f6fd91.diffenv
+    	.diffenv/commits/6ecebfa22969c33be2f67d7f91c63a838a756b21.diffenv
+    	.diffenv/commits/70187318b02790ed0ae501801bdfa7475d660548.diffenv
+    	.diffenv/commits/706712b3488bb94036883d67ef1f871bb48c72b6.diffenv
+    	.diffenv/commits/759cd57119934333585d0fb4c6cc1238c76ad14d.diffenv
+    	.diffenv/commits/77749af7d1dc33e24e95981345b569e19a655e90.diffenv
+    	.diffenv/commits/7f16ea2044b2ba12a036a11d365807db54cfbeed.diffenv
+    	.diffenv/commits/7fd37f503cd46b96ad249d8ae8e884bddd0d13cc.diffenv
+    	.diffenv/commits/80f28949112b2c4b9fbab1a8d66a0b3bba3c97d3.diffenv
+    	.diffenv/commits/834a1c7fe05383e6d5e7a638ba5b5ef21aa150f6.diffenv
+    	.diffenv/commits/856fea119d383e422948f724adab314602077fe5.diffenv
+    	.diffenv/commits/8680cd5633d71a661723e2e50515ced7c860bc7c.yaml
+    	.diffenv/commits/886d4a55f738db76dc96603c7567ef5652f0c492.diffenv
+    	.diffenv/commits/8a764320b8282bc008594ba1a7b53922b14918b6.diffenv
+    	.diffenv/commits/8bc0b52250d565140eaa230eafc90f94cf83f07f.diffenv
+    	.diffenv/commits/8f553cf58d5595fa9b4238215787baac6520bd6b.diffenv
+    	.diffenv/commits/9bcd2095b5d65765dbad87b09735b2a934a1f8d7.diffenv
+    	.diffenv/commits/a0b4431a3a63f21b17ad85877182178e41f68599.diffenv
+    	.diffenv/commits/a0d29e83656a01329f702ab08e953aef1607d7b5.diffenv
+    	.diffenv/commits/a285eba637d944f3c53450f7a5ce05e878962d33.diffenv
+    	.diffenv/commits/afcabc8a0bec131fdcd77a4b040ed2bcb406ed46.diffenv
+    	.diffenv/commits/b455412413df8b99f3efadb8fc38c6faf2d38e3b.diffenv
+    	.diffenv/commits/b74274fd7f6bd85bb7f2b1e5baf4129701f3400e.diffenv
+    	.diffenv/commits/b82952d080a488cf7aac58797ff034d71b9165c3.diffenv
+    	.diffenv/commits/bfe232b69e3db4d4d524d52fc8996218aa429e2a.diffenv
+    	.diffenv/commits/c18c827c48f462b9ccb4daf0b68c4d099f69be0b.diffenv
+    	.diffenv/commits/c1c5f9162e170c325118d21794e4ef76f034f35c.diffenv
+    	.diffenv/commits/c2360230586ef660878662279f257ff6ee14c362.diffenv
+    	.diffenv/commits/c653cc793961cf751ea07ea435277814ed556234.diffenv
+    	.diffenv/commits/c73d6c5fa6a631f092f31e0715de7af430513fc1.diffenv
+    	.diffenv/commits/c75ca695050d40ae8509b109409a08760ef6155f.diffenv
+    	.diffenv/commits/cdbb7e07e573bddf813bdf4ae0e33b21dfe25aa7.diffenv
+    	.diffenv/commits/cf0383404a641ff224225170afb821ac3beedfce.diffenv
+    	.diffenv/commits/d720e1d4bb42b69842fc085817dc47d73a4862d3.diffenv
+    	.diffenv/commits/e77ed2bcad7e275999579464a82c55060debd14e.diffenv
+    	.diffenv/commits/eae7254c3f362e2d397e7552c607604fe89ad3bc.diffenv
+    	.diffenv/commits/eda95fb3582dab5087c57e2aadb7134e44620fd3.diffenv
+    	.diffenv/commits/f4d457f6a959823fbd2aba2fa480f0aa86e24d3b.diffenv
+    	.diffenv/commits/f67085e9d72ed17d2d701198c3176e75cb2a988c.diffenv
+    	.diffenv/commits/f8e6bf58cc9d2d1058d8ace3cbc0152a2ee5f3aa.diffenv
+    	.diffenv/commits/fd1d4b8d484dc8f7383eb69809e1c783d9593bc9.diffenv
+    	.diffenv/commits/fe273abd284f07492839b9330623b0ef67b773e7.diffenv
+    	env.yaml
+
+    no changes added to commit (use "git add" and/or "git commit -a")
+
+  git-user-email: stan@wanderingstan.com
+
+  git-user-name: Stan James
+
+  version: git version 2.22.0
+
+os:
+
+  timezone: 0200
+
+  version: Darwin 18.7.0 x86_64
+
+python:
+
+  pip-packages:
+    astroid: 2.2.5
+    autopep8: 1.4.4
+    bleach: 3.1.0
+    certifi: 2019.6.16
+    chardet: 3.0.4
+    colorama: 0.4.1
+    diffenv: 0.2.0
+    docutils: 0.15.2
+    gitdb2: 2.0.5
+    GitPython: 2.1.13
+    idna: 2.8
+    importlib-metadata: 0.19
+    isort: 4.3.21
+    lazy-object-proxy: 1.4.1
+    mccabe: 0.6.1
+    pip: 19.0.3
+    pkginfo: 1.5.0.1
+    psutil: 5.6.3
+    pycodestyle: 2.5.0
+    Pygments: 2.4.2
+    pylint: 2.3.1
+    readme-renderer: 24.0
+    requests: 2.22.0
+    requests-toolbelt: 0.9.1
+    rope: 0.14.0
+    ruamel.yaml: 0.16.0
+    ruamel.yaml.clib: 0.1.0
+    setuptools: 41.0.1
+    six: 1.12.0
+    smmap2: 2.0.5
+    tqdm: 4.33.0
+    twine: 1.13.0
+    typed-ast: 1.4.0
+    urllib3: 1.25.3
+    webencodings: 0.5.1
+    wheel: 0.33.4
+    wrapt: 1.11.2
+    zipp: 0.5.2
+
+  pip3-packages:
+    astroid: 2.2.5
+    autopep8: 1.4.4
+    bleach: 3.1.0
+    certifi: 2019.6.16
+    chardet: 3.0.4
+    colorama: 0.4.1
+    diffenv: 0.2.0
+    docutils: 0.15.2
+    gitdb2: 2.0.5
+    GitPython: 2.1.13
+    idna: 2.8
+    importlib-metadata: 0.19
+    isort: 4.3.21
+    lazy-object-proxy: 1.4.1
+    mccabe: 0.6.1
+    pip: 19.0.3
+    pkginfo: 1.5.0.1
+    psutil: 5.6.3
+    pycodestyle: 2.5.0
+    Pygments: 2.4.2
+    pylint: 2.3.1
+    readme-renderer: 24.0
+    requests: 2.22.0
+    requests-toolbelt: 0.9.1
+    rope: 0.14.0
+    ruamel.yaml: 0.16.0
+    ruamel.yaml.clib: 0.1.0
+    setuptools: 41.0.1
+    six: 1.12.0
+    smmap2: 2.0.5
+    tqdm: 4.33.0
+    twine: 1.13.0
+    typed-ast: 1.4.0
+    urllib3: 1.25.3
+    webencodings: 0.5.1
+    wheel: 0.33.4
+    wrapt: 1.11.2
+    zipp: 0.5.2
+
+  python-version: Python 3.7.3
+
+  python3-version: Python 3.7.3
+
+  virtualenv: |
+
+  which-python: /usr/local/opt/python/libexec/bin/python
+
+  which-python3: /usr/local/bin/python3
+
+shell:
+
+  envvars:
+    Apple_PubSub_Socket_Render: /private/tmp/com.apple.launchd.obyCxwiqZk/Render
+    CLICOLOR: '1'
+    COLORTERM: truecolor
+    COMMAND_MODE: unix2003
+    DISPLAY: /private/tmp/com.apple.launchd.iqAX0LXCVg/org.macosforge.xquartz:0
+    EDITOR: sublw
+    GIT_AUTHOR_DATE: '@1565983009 +0200'
+    GIT_AUTHOR_EMAIL: stan@wanderingstan.com
+    GIT_AUTHOR_NAME: Stan James
+    GIT_EDITOR: ':'
+    GIT_EXEC_PATH: /usr/local/Cellar/git/2.22.0/libexec/git-core
+    GIT_INDEX_FILE: .git/index
+    GIT_PREFIX: ''
+    HISTTIMEFORMAT: '%Y-%m-%d_%H-%M-%S; '
+    HOME: /Users/stan
+    ISODATETIME: '2019-08-16 17:38:49'
+    LANG: en_US.UTF-8
+    LOGNAME: stan
+    LSCOLORS: GxFxCxDxBxegedabagaced
+    NVM_BIN: /Users/stan/.nvm/versions/node/v10.16.0/bin
+    NVM_CD_FLAGS: ''
+    NVM_DIR: /Users/stan/.nvm
+    PATH(HASHED): 5541d1f8f1d0aaeaaa4eeb411bb945a9(HASH)
+    PWD: /Users/stan/code/diffenv
+    SHELL: /bin/bash
+    SHLVL: '3'
+    SSH_AUTH_SOCK: /private/tmp/com.apple.launchd.E89PogHTQB/Listeners
+    TERM: xterm-color
+    TERM_PROGRAM: vscode
+    TERM_PROGRAM_VERSION: 1.37.1
+    TMPDIR: /var/folders/9n/2vf6_x0s79bdzphhpyk83fnr0000gn/T/
+    USER: stan
+    XPC_FLAGS: '0x0'
+    XPC_SERVICE_NAME: '0'
+    _: /usr/local/bin/diffenv
+    __CF_USER_TEXT_ENCODING: 0x1F5:0x0:0x0
+    __PYVENV_LAUNCHER__: /usr/local/bin/python3
+
+  shell-version: GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin18) Copyright
+    (C) 2007 Free Software Foundation, Inc.
