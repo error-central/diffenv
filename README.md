@@ -4,7 +4,10 @@
 
 ##  Overview
 
-diffenv gathers and compares development environments. It also defines a simple standard for storing a complete picture of an environment.
+diffenv gathers and compares development environments. It defines 
+a simple standard for storing a complete picture of an environment
+as a structured collection of "facets" such as "python", "shell",
+"git", etc.
 
 ![output](https://user-images.githubusercontent.com/673455/62836101-182d1200-bc60-11e9-95c7-1f52dfb197b7.gif)
 
