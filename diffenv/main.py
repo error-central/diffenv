@@ -24,14 +24,18 @@ except:
     git_toplevel = None
 
 
-def run_facet(path):
+def run_facet(path, args=None):
     """ Run a facet and return the results as a Python object """
+    # Package single string args up as list
+    if args and not isinstance(args, list):
+        args = [args]
+    args = list(map(str, args or []))
     if not os.access(path, os.X_OK):
         sys.stderr.write("ERROR: Facet is not executable: %s" % path)
         return "WARNING: Skipping non-executable facet: %s" % path
     try:
         process = subprocess.Popen(
-            [path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            [path] + args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = process.communicate()
         out_decoded = out.decode("utf-8").strip()
         if err:
@@ -135,7 +139,9 @@ def collect_env(facets, whitelist):
     """
     if isinstance(facets, str):
         # Actually run the facet and return the results
-        return run_facet(facets)
+        # in this case facets is a path to the facet executable
+        # and whitelist is a list of arguments (potentially)
+        return run_facet(facets, whitelist)
     elif whitelist is None or isinstance(whitelist, str):
         for subdir in list(facets.keys()):
             facets[subdir] = collect_env(facets[subdir], whitelist)

@@ -14,6 +14,11 @@ from collections import OrderedDict
 
 MAX_FILE_SIZE_HASH = 1024 * 1024  # 1 MB
 
+if len(sys.argv) > 1:
+    depth = int(sys.argv[1])
+else:
+    depth = 0
+
 
 def md5(fname):
     """  Get md5 hash of file. See: https://stackoverflow.com/a/3431838 """
@@ -24,27 +29,33 @@ def md5(fname):
     return hash_md5.hexdigest()
 
 
-def file_info(path):
-    filepath = str(path.absolute())
-    file_size_bytes = os.path.getsize(filepath)
-    file_mod_time = os.path.getmtime(filepath)
-    if path.is_dir():
-        return ', '.join([str(file_size_bytes),
-                          str(file_mod_time), 'DIR'])
-    else:
-        file_hash = ("-" * 32) if (
-          file_size_bytes > MAX_FILE_SIZE_HASH) else md5(filepath)
+def file_info(path, depth):
+    try:
+        filepath = str(path.absolute())
+        file_size_bytes = os.path.getsize(filepath)
+        file_mod_time = os.path.getmtime(filepath)
+        if path.is_dir():
+            if depth < 1:
+                return ', '.join([str(file_size_bytes),
+                                  str(file_mod_time), 'DIR'])
+            else:
+                return collect_dir_info(path, depth - 1)
+        else:
+            file_hash = ("-" * 32) if (
+                file_size_bytes > MAX_FILE_SIZE_HASH) else md5(filepath)
 
-        return ', '.join(
-          [str(file_size_bytes), str(file_mod_time)[:16], file_hash])
+            return ', '.join(
+                [str(file_size_bytes), str(file_mod_time)[:16], file_hash])
+    except FileNotFoundError as e:
+        return "deleted"
 
 
-def collect_dir_info(path):
-    return OrderedDict([(p.name or '.', file_info(p))
+def collect_dir_info(path, depth):
+    return OrderedDict([(p.name or '.', file_info(p, depth))
                         for p in sorted(list(path.iterdir()),
                                         reverse=True)
                         if p.name != '.git'])
 
 
-json.dump(collect_dir_info(pathlib.Path('.')),
+json.dump(collect_dir_info(pathlib.Path('.'), depth),
           sys.stdout)
