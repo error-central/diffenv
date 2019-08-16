@@ -170,7 +170,36 @@ The facet file itself needs to be excutable (`chmod +x <yourfacet>`).
 
 You can limit which facets are run with a yaml file saved in `.diffenv/config.yaml`
 
-See `example_config.yaml` for more information.
+Here's an example config:
+
+```yaml
+# currently there is only one relevant part of the config, facets
+facets:
+  # you can simply list a category of facet that you want
+  # since it's a nested yaml dictionary / map, don't forget the colon
+  python:
+  # or you can list all the way down to the facet within a category
+  nodejs:
+    node-version:
+  git:
+  os:
+  shell:
+    # you can also provide command line arguments as list to the facet
+    # in this case it's a whitelist of environment variables
+    envvars:
+      - DISPLAY
+      - USER
+      - PATH
+      - PWD
+      - HOME
+      - SHELL
+      - COLORTERM
+      - TERM
+  directory:
+    # in this case we restrict how deep we recur into child directories
+    listing: 1
+```
+
 
 ## Contributing to diffenv
 

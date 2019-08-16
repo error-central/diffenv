@@ -15,6 +15,11 @@ from collections import OrderedDict
 # Switched to json as it needs no librarires
 # yaml = YAML()
 
+if len(sys.argv) > 1:
+    whitelist = sys.argv[1:]
+else:
+    whitelist = None
+
 
 def filter_sensitive_vars(env_var: Tuple[str, str]):
     """
@@ -43,5 +48,8 @@ def filter_sensitive_vars(env_var: Tuple[str, str]):
 
 
 env_vars = os.environ.items()
-filtered_env_vars = list(map(filter_sensitive_vars, env_vars))
+# if whitelist is given only print vars in whitelist
+filtered_env_vars = [(k, v) for k, v in map(filter_sensitive_vars, env_vars)
+                     if whitelist is None or k in whitelist]
+
 json.dump(OrderedDict(sorted(filtered_env_vars)), sys.stdout)
