@@ -3,12 +3,14 @@
 import os
 import hashlib
 import sys
-from ruamel.yaml import YAML
-from ruamel.yaml.comments import CommentedMap
+#from ruamel.yaml import YAML
+#from ruamel.yaml.comments import CommentedMap
 import pathlib
+import json
+from collections import OrderedDict
 
 
-yaml = YAML()
+#yaml = YAML()
 
 MAX_FILE_SIZE_HASH = 1024 * 1024  # 1 MB
 
@@ -38,10 +40,11 @@ def file_info(path):
 
 
 def collect_dir_info(path):
-    return CommentedMap([(p.name or '.', file_info(p))
-                         for p in sorted(list(path.iterdir()),
-                                         reverse=True)])
+    return OrderedDict([(p.name or '.', file_info(p))
+                        for p in sorted(list(path.iterdir()),
+                                        reverse=True)
+                        if p.name != '.git'])
 
 
-yaml.dump(collect_dir_info(pathlib.Path('.')),
+json.dump(collect_dir_info(pathlib.Path('.')),
           sys.stdout)

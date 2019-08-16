@@ -79,7 +79,7 @@ def extract_facet_dir(dirpath, structure, depth=0):
     p = pathlib.Path(dirpath)
     if p.exists():
         for item in sorted(p.iterdir()):
-            if str(item).startswith('.'):
+            if item.name.startswith('.') or item.name.startswith('#'):
                 # Ignore hidden files
                 continue
             if item.is_dir():
