@@ -21,8 +21,8 @@ shell:
   envvars:
     EDITOR: sublw
     GIT_EDITOR: subl -w
-    API_ENDPOINT: http://api.lvh.me:4000
     PRISMA_ENDPOINT: http://prisma:4466
+    GOOGLE_API_KEY(HASHED): 603ade004ce4bb13c3f66bc1644164ca(HASH)
 os:
   timezone: 0200
   version: Darwin 18.7.0 x86_64
