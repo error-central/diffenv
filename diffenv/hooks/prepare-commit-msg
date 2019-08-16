@@ -11,5 +11,5 @@ COMMIT_MSG_FILE=$1
 COMMIT_SOURCE=$2
 SHA1=$3
 
-diffenv >> "$COMMIT_MSG_FILE"
+echo "\ndiffenv was added to this commit.\n" >> "$COMMIT_MSG_FILE"
 

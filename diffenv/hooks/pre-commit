@@ -1,0 +1,6 @@
+#!/bin/sh
+
+filename=$(git rev-parse HEAD)
+
+diffenv --output ".diffenv/commits/$filename.yaml"
+git add ".diffenv/commits/$filename.yaml"

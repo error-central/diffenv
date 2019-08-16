@@ -1,0 +1,219 @@
+
+diffenv-version: 0.2.0
+
+directory:
+
+  listing:
+    tests: 160, 1565970697.628735, DIR
+    setup.py: 733, 1565938699.60907, 45a6e791baed384f3973926ab47d7a97
+    facets: 96, 1565678335.6676767, DIR
+    examples: 160, 1565526937.9334917, DIR
+    example_config.yaml: 45, 1564670036.66021, 759eab2b0f2d79bd2c0991820fa76787
+    dist: 128, 1565525687.4886672, DIR
+    diffenv.egg-info: 256, 1565525994.236996, DIR
+    diffenv: 288, 1565938699.608119, DIR
+    build: 160, 1565525325.6887057, DIR
+    bin: 96, 1565983913.3839562, DIR
+    __pycache__: 96, 1564129273.2804494, DIR
+    README.md: 5488, 1565971150.27754, 910a046ad20caf962e9e1ef33b7a9bdb
+    MANIFEST.in: 68, 1565686663.53471, edff356a00ba1b5f0660d5514ebb5fb5
+    LICENSE: 1070, 1563971721.10152, bbd2cb1a41f404058e170e74a725bb18
+    .vscode: 128, 1565036334.5557442, DIR
+    .travis.yml: 814, 1565623659.24969, d7278269a9794d1260164b15942c0c60
+    .gitignore: 1204, 1565984121.26760, 492111bad3319be511a2db1a315e8b6a
+    .github: 96, 1565526937.9326942, DIR
+    .diffenv: 192, 1565528757.891121, DIR
+    .DS_Store: 10244, 1565983486.60602, 1bc2854d0550a6d9a867e8f3d20c1e70
+
+  path: /Users/stan/code/diffenv
+
+git:
+
+  git-remote: |-
+    origin	git@github.com:error-central/diffenv.git (fetch)
+    origin	git@github.com:error-central/diffenv.git (push)
+
+  git-status: |-
+    On branch master
+    Your branch is ahead of 'origin/master' by 5 commits.
+      (use "git push" to publish your local commits)
+
+    Changes to be committed:
+      (use "git reset HEAD <file>..." to unstage)
+
+    	modified:   .gitignore
+    	modified:   bin/diffenv
+    	deleted:    diffenv/hooks/post-commit
+    	new file:   diffenv/hooks/pre-commit
+    	modified:   diffenv/hooks/prepare-commit-msg
+    	modified:   examples/config-small.yaml
+
+    Untracked files:
+      (use "git add <file>..." to include in what will be committed)
+
+    	.diffenv/commits/ab00d4ad917201cde332fc279e57ea1fbe2d96f5.yaml
+
+  git-user-email: stan@wanderingstan.com
+
+  git-user-name: Stan James
+
+  version: git version 2.22.0
+
+os:
+
+  timezone: 0200
+
+  version: Darwin 18.7.0 x86_64
+
+python:
+
+  pip-packages:
+    astroid: 2.2.5
+    autopep8: 1.4.4
+    bleach: 3.1.0
+    certifi: 2019.6.16
+    chardet: 3.0.4
+    colorama: 0.4.1
+    diffenv: 0.2.0
+    docutils: 0.15.2
+    gitdb2: 2.0.5
+    GitPython: 2.1.13
+    idna: 2.8
+    importlib-metadata: 0.19
+    isort: 4.3.21
+    lazy-object-proxy: 1.4.1
+    mccabe: 0.6.1
+    pip: 19.0.3
+    pkginfo: 1.5.0.1
+    psutil: 5.6.3
+    pycodestyle: 2.5.0
+    Pygments: 2.4.2
+    pylint: 2.3.1
+    readme-renderer: 24.0
+    requests: 2.22.0
+    requests-toolbelt: 0.9.1
+    rope: 0.14.0
+    ruamel.yaml: 0.16.0
+    ruamel.yaml.clib: 0.1.0
+    setuptools: 41.0.1
+    six: 1.12.0
+    smmap2: 2.0.5
+    tqdm: 4.33.0
+    twine: 1.13.0
+    typed-ast: 1.4.0
+    urllib3: 1.25.3
+    webencodings: 0.5.1
+    wheel: 0.33.4
+    wrapt: 1.11.2
+    zipp: 0.5.2
+
+  pip3-packages:
+    astroid: 2.2.5
+    autopep8: 1.4.4
+    bleach: 3.1.0
+    certifi: 2019.6.16
+    chardet: 3.0.4
+    colorama: 0.4.1
+    diffenv: 0.2.0
+    docutils: 0.15.2
+    gitdb2: 2.0.5
+    GitPython: 2.1.13
+    idna: 2.8
+    importlib-metadata: 0.19
+    isort: 4.3.21
+    lazy-object-proxy: 1.4.1
+    mccabe: 0.6.1
+    pip: 19.0.3
+    pkginfo: 1.5.0.1
+    psutil: 5.6.3
+    pycodestyle: 2.5.0
+    Pygments: 2.4.2
+    pylint: 2.3.1
+    readme-renderer: 24.0
+    requests: 2.22.0
+    requests-toolbelt: 0.9.1
+    rope: 0.14.0
+    ruamel.yaml: 0.16.0
+    ruamel.yaml.clib: 0.1.0
+    setuptools: 41.0.1
+    six: 1.12.0
+    smmap2: 2.0.5
+    tqdm: 4.33.0
+    twine: 1.13.0
+    typed-ast: 1.4.0
+    urllib3: 1.25.3
+    webencodings: 0.5.1
+    wheel: 0.33.4
+    wrapt: 1.11.2
+    zipp: 0.5.2
+
+  python-version: Python 3.7.3
+
+  python3-version: Python 3.7.3
+
+  virtualenv: |
+
+  which-python: /usr/local/opt/python/libexec/bin/python
+
+  which-python3: /usr/local/bin/python3
+
+shell:
+
+  envvars:
+    AMD_ENTRYPOINT: vs/workbench/services/extensions/node/extensionHostProcess
+    APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL: 'true'
+    Apple_PubSub_Socket_Render: /private/tmp/com.apple.launchd.obyCxwiqZk/Render
+    CLICOLOR: '1'
+    COMMAND_MODE: unix2003
+    DISPLAY: /private/tmp/com.apple.launchd.iqAX0LXCVg/org.macosforge.xquartz:0
+    EDITOR: sublw
+    ELECTRON_RUN_AS_NODE: '1'
+    GIT_ASKPASS(HASHED): f7f6c93b472769a7f435573524ec859c(HASH)
+    GIT_AUTHOR_DATE: '@1565984184 +0200'
+    GIT_AUTHOR_EMAIL: stan@wanderingstan.com
+    GIT_AUTHOR_NAME: Stan James
+    GIT_EDITOR: ':'
+    GIT_EXEC_PATH: /usr/local/Cellar/git/2.22.0/libexec/git-core
+    GIT_INDEX_FILE: .git/index
+    GIT_PREFIX: ''
+    HISTTIMEFORMAT: '%Y-%m-%d_%H-%M-%S; '
+    HOME: /Users/stan
+    ISODATETIME: '2019-08-16 13:24:43'
+    LANG: en_US.UTF-8
+    LC_ALL: en_US.UTF-8
+    LOGNAME: stan
+    LSCOLORS: GxFxCxDxBxegedabagaced
+    NVM_BIN: /Users/stan/.nvm/versions/node/v10.16.0/bin
+    NVM_CD_FLAGS: ''
+    NVM_DIR: /Users/stan/.nvm
+    PATH(HASHED): c13b21083de9282a02893eccaf6cce88(HASH)
+    PIPE_LOGGING: 'true'
+    PWD: /Users/stan/code/diffenv
+    SHELL: /bin/bash
+    SHLVL: '2'
+    SSH_AUTH_SOCK: /private/tmp/com.apple.launchd.E89PogHTQB/Listeners
+    TERM: xterm-color
+    TMPDIR: /var/folders/9n/2vf6_x0s79bdzphhpyk83fnr0000gn/T/
+    USER: stan
+    VERBOSE_LOGGING: 'true'
+    VSCODE_GIT_ASKPASS_HANDLE(HASHED): 650140d2525815002eb6e27e3300cf67(HASH)
+    VSCODE_GIT_ASKPASS_MAIN(HASHED): 6af3c36a10ecc53c09c312b7cfdf594b(HASH)
+    VSCODE_GIT_ASKPASS_NODE(HASHED): 806450b4398ff983c7937491b19c4ece(HASH)
+    VSCODE_GIT_COMMAND: commit
+    VSCODE_HANDLES_UNCAUGHT_ERRORS: 'true'
+    VSCODE_IPC_HOOK: /Users/stan/Library/Application Support/Code/1.37.1-main.sock
+    VSCODE_IPC_HOOK_EXTHOST: /var/folders/9n/2vf6_x0s79bdzphhpyk83fnr0000gn/T/vscode-ipc-2bd4a4fc-de2f-4707-94a8-b20d768ba681.sock
+    VSCODE_LOGS: /Users/stan/Library/Application Support/Code/logs/20190816T132442
+    VSCODE_LOG_STACK: 'false'
+    VSCODE_NLS_CONFIG: '{"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}'
+    VSCODE_NODE_CACHED_DATA_DIR: /Users/stan/Library/Application Support/Code/CachedData/f06011ac164ae4dc8e753a3fe7f9549844d15e35
+    VSCODE_PID: '18791'
+    VSCODE_PREVENT_FOREIGN_INSPECT: 'true'
+    XPC_FLAGS: '0x0'
+    XPC_SERVICE_NAME: '0'
+    _: /usr/local/bin/diffenv
+    __CF_USER_TEXT_ENCODING: 0x1F5:0x0:0x0
+    __PYVENV_LAUNCHER__: /usr/local/bin/python3
+
+  shell-version: GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin18) Copyright
+    (C) 2007 Free Software Foundation, Inc.

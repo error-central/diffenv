@@ -122,26 +122,32 @@ try:
             sys.stderr.write("ERROR: Not in a git repot, so cannot add git hooks.")
             exit(1)
 
-
         hooks_dst = os.path.join(
-            main.git_toplevel, '.git', 'hooks', 'post-commit')
-        hooks_src = os.path.join(main.get_main_dir(), 'hooks', 'post-commit')
-        # Copy the hook
-        copyfile(hooks_src, hooks_dst)
-        # Make executable
-        copystat(hooks_src, hooks_dst)
-        print("virtualenv: Installed git post-commit hook to %s" % hooks_dst)
+            main.git_toplevel, '.git', 'hooks', 'pre-commit')
+        if os.path.isfile(hooks_dst):
+            sys.stderr.write(
+                "%s already exists. Skipping.\n" % (hooks_dst))
+        else:
+            hooks_src = os.path.join(main.get_main_dir(), 'hooks', 'pre-commit')
+            # Copy the hook
+            copyfile(hooks_src, hooks_dst)
+            # Make executable
+            copystat(hooks_src, hooks_dst)
+            print("virtualenv: Installed git post-commit hook to %s" % hooks_dst)
 
         hooks_dst = os.path.join(
             main.git_toplevel, '.git', 'hooks', 'prepare-commit-msg')
-        hooks_src = os.path.join(
-            main.get_main_dir(), 'hooks', 'prepare-commit-msg')
-
-        # Copy the hook
-        copyfile(hooks_src, hooks_dst)
-        # Make executable
-        copystat(hooks_src, hooks_dst)
-        print("virtualenv: Installed git prepare-commit-msg hook to %s" % hooks_dst)
+        if os.path.isfile(hooks_dst):
+            sys.stderr.write(
+                "%s already exists. Skipping.\n" % (hooks_dst))
+        else:
+            hooks_src = os.path.join(
+                main.get_main_dir(), 'hooks', 'prepare-commit-msg')
+            # Copy the hook
+            copyfile(hooks_src, hooks_dst)
+            # Make executable
+            copystat(hooks_src, hooks_dst)
+            print("virtualenv: Installed git prepare-commit-msg hook to %s" % hooks_dst)
 
 
     elif args.compare is not None:
@@ -194,6 +200,11 @@ try:
 
     elif args.issue:
         # --share : Get a shareable link
+        if main.git_toplevel is None:
+            sys.stderr.write(
+                "ERROR: Not in a git repot, so cannot add git hooks.")
+            exit(1)
+
         sys.stderr.write("Collecting env...\r")
         env = main.collect_env(facets, whitelist)
         yaml_stream = StringIO()
