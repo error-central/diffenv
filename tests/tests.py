@@ -4,8 +4,8 @@ import sys
 
 # Unit tests for diffenv
 #
-# To run:
-#     python3 -m unittest tests.py
+# Run from project root as:
+#     python3 -m unittest tests/tests.py
 
 
 class TestStringMethods(unittest.TestCase):
@@ -32,7 +32,7 @@ class TestStringMethods(unittest.TestCase):
 
         # print(help_out)
 
-        with open('../README.md', 'r') as readme_file:
+        with open('./README.md', 'r') as readme_file:
             readme = readme_file.read()
 
         print(readme)
