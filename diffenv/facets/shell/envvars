@@ -6,6 +6,7 @@ import os
 import sys
 from typing import Tuple
 import hashlib
+from urllib.parse import urlparse
 
 # Return a YAML list of all environment variables, with sensitive ones hashed.
 
@@ -18,8 +19,13 @@ def filter_sensitive_vars(env_var: Tuple[str, str]):
     then just return the hash of the value.
     Input is a env var tuple, e.g. ('SHELL','/bin/bash')
     """
-    sensitive_pattern_list = ['KEY', 'SECRET']
     (key, value) = env_var
+    # URLs with passwords
+    parts = urlparse(value)
+    if parts.password:
+        return (key + '(HASHED)', hashlib.md5(str(value).encode("utf-8")).hexdigest() + '(HASH)')
+    # var names
+    sensitive_pattern_list = ['KEY', 'SECRET', 'PASSWORD', 'PASS']
     if any(pattern.upper() in key.upper() for pattern in sensitive_pattern_list):
         return (key + '(HASHED)', hashlib.md5(str(value).encode("utf-8")).hexdigest() + '(HASH)')
     else:
