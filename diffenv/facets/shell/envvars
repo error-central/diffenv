@@ -10,8 +10,9 @@ from urllib.parse import urlparse
 import json
 from collections import OrderedDict
 
-# Return a YAML list of all environment variables, with sensitive ones hashed.
+# Return a structured list of all environment variables, with sensitive ones hashed.
 
+# Switched to json as it needs no librarires
 # yaml = YAML()
 
 
@@ -22,16 +23,23 @@ def filter_sensitive_vars(env_var: Tuple[str, str]):
     Input is a env var tuple, e.g. ('SHELL','/bin/bash')
     """
     (key, value) = env_var
-    # URLs with passwords
+
+    # Test if value is super long
+    MAX_VALUE_LEN = 256
+    if len(value) > MAX_VALUE_LEN:
+        return (key + '(HASHED)', hashlib.md5(str(value).encode("utf-8")).hexdigest() + '(HASH)')
+
+    # Test if Value is url with password: http://username:password@example.com/
     parts = urlparse(value)
     if parts.password:
         return (key + '(HASHED)', hashlib.md5(str(value).encode("utf-8")).hexdigest() + '(HASH)')
-    # var names
-    sensitive_pattern_list = ['KEY', 'SECRET', 'PASSWORD', 'PASS']
-    if any(pattern.upper() in key.upper() for pattern in sensitive_pattern_list):
+
+    # Test if Key appears to be "sensitive"
+    SENSITIVE_PATTERN_LIST = ['KEY', 'SECRET', 'PASSWORD', 'PASS']
+    if any(pattern.upper() in key.upper() for pattern in SENSITIVE_PATTERN_LIST):
         return (key + '(HASHED)', hashlib.md5(str(value).encode("utf-8")).hexdigest() + '(HASH)')
-    else:
-        return env_var
+
+    return env_var
 
 
 env_vars = os.environ.items()
