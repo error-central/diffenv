@@ -131,7 +131,7 @@ $ diffenv --help
 
 usage: diffenv [-h] [-o OUTPUT] [-c COMPARE] [--add-hooks] [--share] [--issue]
                [--post POST] [--config CONFIG] [--ignore-config] [--no-color]
-               [--no-paging] [--version]
+               [--no-paging] [--version] [-f FACET]
 
 Diff your total environment. Run without any params to simply output current
 environment state as YAML.
@@ -152,8 +152,11 @@ optional arguments:
   --no-color            don't color diff output
   --no-paging           don't use less for paging output
   --version             display version and exit
+  -f FACET, --facet FACET
+                        run a specific facet
 
 More information and source code at https://github.com/error-central/diffenv
+
 ```
 
 ## Customization

@@ -52,6 +52,7 @@ parser.add_argument('--no-paging',
 parser.add_argument('--version',
                     action='store_true',
                     help="display version and exit")
+parser.add_argument('-f', '--facet', help='run a specific facet')
 
 args = parser.parse_args()
 
@@ -112,6 +113,15 @@ try:
         except:
             user_config = None
         config = (git_config or user_config or default_config)
+
+    if args.facet:
+        # The user has specified one facet to execute
+        # so overwrite the config facets
+        facets_agg = None
+        for facet_name in reversed(args.facet.split(':')):
+            facets_agg = {facet_name: facets_agg}
+        config['facets'] = facets_agg
+
     facets = main.get_all_facets()
     whitelist = config['facets']
 
