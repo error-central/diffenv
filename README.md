@@ -31,6 +31,16 @@ os:
 ```
 (Simplified example. See [full example](https://raw.githubusercontent.com/error-central/diffenv/master/examples/gabe_env.yaml) here)
 
+You can also use diffenv to find out things like installed packages or current environment variables with a one-liner:
+
+```bash
+# get all python-relevant information
+diffenv --facet python
+
+# list environment variables
+diffenv -f shell:envvars
+```
+
 ### Share your environment with co-worker
 ```
 #$ diffenv --share
@@ -71,6 +81,10 @@ python:
 ```
 
 ### Include environment in submitted issues
+
+If you are an open-source project maintainer you can use diffenv to structure the submission of bugreports. Tell your users to specify the conditions under which their bug occurs by sending along their diffenv output. This way you can get significantly more detailled insight from the get-go without having to go back and forth with the reporter of the bug.
+
+For github issues we provide a handy way to submit a new issue and include a local diffenv dump directly from the command line.
 
 ```bash
 #$ diffenv --issue
