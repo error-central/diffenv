@@ -75,7 +75,7 @@ python:
 ```bash
 #$ diffenv --issue
 
-# Browser will open with new issue
+# Browser will open a Github issue with env data automatically added:
 ```
 
 <img width="407" alt="Screen Shot 2019-08-14 at 6 43 06 PM" src="https://user-images.githubusercontent.com/673455/63039406-7f96cc00-bec3-11e9-88e8-cb49bc931140.png">
