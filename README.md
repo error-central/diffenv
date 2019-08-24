@@ -31,13 +31,13 @@ os:
 ```
 (Simplified example. See [full example](https://raw.githubusercontent.com/error-central/diffenv/master/examples/gabe_env.yaml) here)
 
-You can also use diffenv to find out things like installed packages or current environment variables with a one-liner:
+You can also get just specific facets:
 
 ```bash
-# get all python-relevant information
+# Get all python-relevant information
 diffenv --facet python
 
-# list environment variables
+# List environment variables
 diffenv -f shell:envvars
 ```
 
@@ -190,19 +190,25 @@ You can limit which facets are run with a yaml file saved in `.diffenv/config.ya
 Here's an example config:
 
 ```yaml
-# currently there is only one relevant part of the config, facets
+# Currently there is only one relevant part of the config, facets.
 facets:
-  # you can simply list a category of facet that you want
-  # since it's a nested yaml dictionary / map, don't forget the colon
+  # If you give the name of a directory, it will run all facets in it.
+  # In this case, we'll run every facet within `python`.
   python:
-  # or you can list all the way down to the facet within a category
+  
+  # ...or you can list all the way down to the facet within a directory.
+  # Here we'll only run the `node-version` facet.
   nodejs:
     node-version:
+    
   git:
+  
   os:
+  
   shell:
-    # you can also provide command line arguments as list to the facet
-    # in this case it's a whitelist of environment variables
+    # You can also provide command line arguments as list to the facet.
+    # In this case we pass the `shell` facet a whitelist of environment 
+    # variables to show.
     envvars:
       - DISPLAY
       - USER
@@ -213,7 +219,7 @@ facets:
       - COLORTERM
       - TERM
   directory:
-    # in this case we restrict how deep we recur into child directories
+    # In this case we restrict how deep we recur into child directories
     listing: 1
 ```
 
