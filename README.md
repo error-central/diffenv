@@ -82,7 +82,7 @@ python:
 
 ### Include environment in submitted issues
 
-If you are an open-source project maintainer you can use diffenv to structure the submission of bugreports. Tell your users to specify the conditions under which their bug occurs by sending along their diffenv output. This way you can get significantly more detailled insight from the get-go without having to go back and forth with the reporter of the bug.
+If you are an open-source project maintainer you can use diffenv to structure the submission of bug reports. Tell your users to specify the conditions under which their bug occurs by sending along their diffenv output. This way you can get significantly more detailed insight from the get-go without having to go back and forth with the reporter of the bug.
 
 For github issues we provide a handy way to submit a new issue and include a local diffenv dump directly from the command line.
 
