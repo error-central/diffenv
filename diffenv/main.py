@@ -51,14 +51,18 @@ def run_facet(path, args=None):
             # Try to parse JSON
             return json.loads(out_decoded)
             # NOTE: We're throwing away stderr if present
-        except ValueError as e:
+        except json.decoder.JSONDecodeError as e:
+            # maybe it's a multiline JSON
             try:
-                # If that fails, try to parse YAML
-                return yaml.load(out_decoded)
+                return [json.loads(line) for line in out_decoded.split('\n')]
+            except ValueError as e:
+                try:
+                    # If that fails, try to parse YAML
+                    return yaml.load(out_decoded)
                 # NOTE: We're throwing away stderr if present
-            except ScannerError as e:
-                # If that fails, return raw output
-                return LiteralScalarString(out_decoded)
+                except ScannerError as e:
+                    # If that fails, return raw output
+                    return LiteralScalarString(out_decoded)
 
     except subprocess.CalledProcessError as e:
         return LiteralScalarString("ERROR: Problem running %s: %e" % (path, e))
