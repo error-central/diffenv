@@ -8,7 +8,7 @@ def readme():
 
 setup(
     name='diffenv',
-    version='0.2.8',
+    version='0.2.9',
     author='Stan James, Gabriel Pickard',
     author_email='wanderingstan@gmail.com, wergomat@gmail.com',
     url='http://github.com/error-central/diffenv',

@@ -52,6 +52,7 @@ class TestStringMethods(unittest.TestCase):
         # Get the url
         # 5th line Should be e.g. `diffenv --compare https://transfer.sh/15xMWL/diff`
         diff_command = result_lines[5]
+        print(result_lines)
         self.assertEqual(diff_command[:26], "diffenv --compare https://")
 
         process = subprocess.Popen(

@@ -37,7 +37,7 @@ parser.add_argument(
 
 parser.add_argument(
     '--post',
-    default='https://transfer.sh',
+    default='https://file.io',
     help='POST env to specific URL when sharing; must be used with --share')
 parser.add_argument('--config', help='load config from specific file')
 parser.add_argument('--ignore-config',
@@ -197,8 +197,8 @@ try:
         upload_url = args.post
         sys.stderr.write("\033[K")
         sys.stderr.write("Uploading...\r")
-        r = requests.post(upload_url, files={'env.yaml': env_string})
-        share_url = r.text
+        r = requests.post(upload_url, files={'file': env_string}).json()
+        share_url = r['link']
         sys.stderr.write("\033[K")
         print("\033[K")
         print('Your env was uploaded to: ' + share_url)
