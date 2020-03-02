@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for instance in `docker ps -q | sort -V`
+do
+    docker inspect --format '{{json .}}' $instance
+done
